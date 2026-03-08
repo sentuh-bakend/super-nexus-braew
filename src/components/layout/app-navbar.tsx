@@ -2,7 +2,6 @@ import { useUIStore } from "@/stores";
 import { NexusButton } from "@/components/ui/nexus-button";
 import {
   Search,
-  Bell,
   Sun,
   Moon,
   Menu,
@@ -10,6 +9,9 @@ import {
   Minimize2,
 } from "lucide-react";
 import { NexusInput } from "@/components/ui/nexus-input";
+import { NotificationBell } from "@/components/realtime/notification-bell";
+import { RealtimeIndicator } from "@/components/realtime/realtime-indicator";
+import { PresenceAvatars } from "@/components/realtime/presence-avatars";
 
 export function AppNavbar() {
   const { theme, setTheme, density, setDensity, toggleSidebarCollapse } = useUIStore();
@@ -32,7 +34,14 @@ export function AppNavbar() {
         </div>
       </div>
 
-      <div className="flex items-center gap-1">
+      <div className="flex items-center gap-2">
+        {/* Presence avatars (hidden on small screens) */}
+        <div className="hidden lg:block mr-2">
+          <PresenceAvatars max={3} size="sm" showCount={false} />
+        </div>
+
+        <RealtimeIndicator showLabel className="mr-1" />
+
         <NexusButton
           variant="ghost"
           size="icon"
@@ -48,9 +57,9 @@ export function AppNavbar() {
         >
           {theme === "light" ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
         </NexusButton>
-        <NexusButton variant="ghost" size="icon">
-          <Bell className="h-4 w-4" />
-        </NexusButton>
+
+        <NotificationBell />
+
         <div className="ml-2 h-8 w-8 rounded-full bg-primary/20 flex items-center justify-center text-small font-semibold text-primary">
           A
         </div>

@@ -1,8 +1,12 @@
 import { Outlet } from "react-router-dom";
 import { AppSidebar } from "./app-sidebar";
 import { AppNavbar } from "./app-navbar";
+import { useRealtimeInit } from "@/hooks/use-realtime";
 
 export function AppLayout() {
+  // Initialize realtime connections (SSE + WebSocket)
+  useRealtimeInit();
+
   return (
     <div className="flex min-h-screen w-full bg-background">
       <AppSidebar />
