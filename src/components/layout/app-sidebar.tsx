@@ -7,6 +7,7 @@ import {
   ChevronDown, FileText, UserCheck, ShieldCheck,
 } from "lucide-react";
 import { useState } from "react";
+import { OrganizationSwitcher } from "@/features/organizations/organization-switcher";
 import {
   Tooltip,
   TooltipContent,
