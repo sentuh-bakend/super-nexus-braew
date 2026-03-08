@@ -78,7 +78,7 @@ const App = () => (
               <Route path="/reset-password" element={<ResetPasswordPage />} />
 
               {/* App pages (with layout) */}
-              <Route element={<AppLayout />}>
+              <Route element={<AuthGuard><AppLayout /></AuthGuard>}>
                 <Route path="/" element={<DashboardPage />} />
                 <Route path="/users" element={<UsersPage />} />
                 <Route path="/roles" element={<RolesPage />} />
