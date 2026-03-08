@@ -5,7 +5,7 @@ import {
   LayoutDashboard, Users, Shield, Building2, FolderKanban, Settings,
   ChevronLeft, ChevronRight, Hexagon, Palette, Component, KeyRound, Lock,
   ChevronDown, FileText, UserCheck, ShieldCheck, Upload, HeartPulse, BarChart3,
-  Box, Globe,
+  Box, Globe, LogIn, UserPlus, KeySquare,
 } from "lucide-react";
 import { useState } from "react";
 import { OrganizationSwitcher } from "@/features/organizations/organization-switcher";
@@ -68,6 +68,15 @@ const navSections: NavSection[] = [
       { label: "Settings", path: "/settings", icon: Settings },
       { label: "Design System", path: "/design-system", icon: Palette },
       { label: "Components", path: "/components", icon: Component },
+    ],
+  },
+  {
+    label: "Auth Pages",
+    items: [
+      { label: "Login", path: "/login", icon: LogIn },
+      { label: "Register", path: "/register", icon: UserPlus },
+      { label: "Forgot Password", path: "/forgot-password", icon: KeySquare },
+      { label: "Reset Password", path: "/reset-password", icon: KeyRound },
     ],
   },
 ];
