@@ -17,6 +17,7 @@ import ResetPasswordPage from "@/pages/ResetPasswordPage";
 import DesignSystemPage from "@/pages/DesignSystemPage";
 import ComponentShowcasePage from "@/pages/ComponentShowcasePage";
 import NotFound from "@/pages/NotFound";
+import AuditLogsPage from "@/pages/AuditLogsPage";
 
 // Feature CRUD pages
 import UsersPage from "@/features/users/userPage";
