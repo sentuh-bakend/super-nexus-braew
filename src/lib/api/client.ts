@@ -69,24 +69,24 @@ function validate<T>(schema: z.ZodType<T> | z.ZodTypeAny, data: unknown): T {
 }
 
 export const apiClient = {
-  async get<T>(url: string, schema?: z.ZodType<T>, config?: AxiosRequestConfig): Promise<T> {
+  async get<T>(url: string, schema?: z.ZodTypeAny, config?: AxiosRequestConfig): Promise<T> {
     const res = await axiosInstance.get(url, config);
-    return schema ? validate(schema, res.data) : res.data;
+    return schema ? validate<T>(schema, res.data) : res.data;
   },
 
-  async post<T>(url: string, data?: unknown, schema?: z.ZodType<T>, config?: AxiosRequestConfig): Promise<T> {
+  async post<T>(url: string, data?: unknown, schema?: z.ZodTypeAny, config?: AxiosRequestConfig): Promise<T> {
     const res = await axiosInstance.post(url, data, config);
-    return schema ? validate(schema, res.data) : res.data;
+    return schema ? validate<T>(schema, res.data) : res.data;
   },
 
-  async put<T>(url: string, data?: unknown, schema?: z.ZodType<T>, config?: AxiosRequestConfig): Promise<T> {
+  async put<T>(url: string, data?: unknown, schema?: z.ZodTypeAny, config?: AxiosRequestConfig): Promise<T> {
     const res = await axiosInstance.put(url, data, config);
-    return schema ? validate(schema, res.data) : res.data;
+    return schema ? validate<T>(schema, res.data) : res.data;
   },
 
-  async patch<T>(url: string, data?: unknown, schema?: z.ZodType<T>, config?: AxiosRequestConfig): Promise<T> {
+  async patch<T>(url: string, data?: unknown, schema?: z.ZodTypeAny, config?: AxiosRequestConfig): Promise<T> {
     const res = await axiosInstance.patch(url, data, config);
-    return schema ? validate(schema, res.data) : res.data;
+    return schema ? validate<T>(schema, res.data) : res.data;
   },
 
   async delete<T = void>(url: string, config?: AxiosRequestConfig): Promise<T> {
