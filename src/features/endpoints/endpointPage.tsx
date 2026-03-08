@@ -6,7 +6,8 @@ import { NexusBadge } from "@/components/ui/nexus-badge";
 import { CrudTable, CrudFormDialog, DeleteDialog, type CrudColumnDef, type FieldDef } from "@/features/shared";
 import { Plus } from "lucide-react";
 import { useEndpoints, useCreateEndpoint, useUpdateEndpoint, useDeleteEndpoint } from "./endpointHooks";
-import type { Endpoint } from "@/lib/api/types";
+import { useResources } from "@/features/resources/resourceHooks";
+import type { Endpoint, Resource } from "@/lib/api/types";
 import { Skeleton } from "@/components/ui/skeleton";
 
 const mockData: Endpoint[] = [
