@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { PageHeader } from "@/components/layout/page-header";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { PermissionMatrix } from "./permission-matrix";
-import { RoleInheritanceTree, RoleNode } from "./role-inheritance-tree";
-import { AccessRightManager } from "./access-right-manager";
+import { PermissionMatrix } from "@/features/permissions/permission-matrix";
+import { RoleInheritanceTree, RoleNode } from "@/features/permissions/role-inheritance-tree";
+import { AccessRightManager } from "@/features/permissions/access-right-manager";
 
 const roles = ["Super Admin", "Admin", "Editor", "Viewer"];
 const resources = ["Users", "Roles", "Organizations", "Projects", "Permissions", "Audit Logs", "Settings"];
