@@ -82,6 +82,7 @@ export default function EndpointsPage() {
   const [deleteItem, setDeleteItem] = useState<Endpoint | null>(null);
 
   const { data: response, isLoading, isError } = useEndpoints();
+  const { data: resourcesResponse } = useResources();
   const createEndpoint = useCreateEndpoint();
   const updateEndpoint = useUpdateEndpoint();
   const deleteEndpoint = useDeleteEndpoint();
@@ -91,6 +92,29 @@ export default function EndpointsPage() {
     if (isError) return mockData;
     return mockData;
   }, [response, isError]);
+
+  const resources: Resource[] = useMemo(() => {
+    if (resourcesResponse?.data) return resourcesResponse.data as Resource[];
+    return [
+      { id: "1", name: "Users", slug: "users" },
+      { id: "2", name: "Projects", slug: "projects" },
+      { id: "3", name: "Roles", slug: "roles" },
+      { id: "4", name: "Organizations", slug: "organizations" },
+      { id: "5", name: "Audit Logs", slug: "audit-logs" },
+      { id: "6", name: "System", slug: "system" },
+    ] as Resource[];
+  }, [resourcesResponse]);
+
+  const fields: FieldDef[] = useMemo(() => {
+    const resourceField: FieldDef = {
+      name: "resource_id", label: "Resource", type: "select", required: true,
+      options: resources.map(r => ({ label: r.name, value: r.id })),
+    };
+    // Insert resource field after "path" (index 2)
+    const result = [...baseFields];
+    result.splice(3, 0, resourceField);
+    return result;
+  }, [resources]);
 
   return (
     <div className="space-y-6">
