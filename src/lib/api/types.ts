@@ -51,6 +51,27 @@ export interface Project {
   updated_at?: number;
 }
 
+export interface AccessRight {
+  id: string;
+  name: string;
+  resource: string;
+  action: string;
+  conditions?: Record<string, unknown>;
+  created_at?: number;
+  updated_at?: number;
+}
+
+export interface Permission {
+  id: string;
+  role_id: string;
+  access_right_id: string;
+  granted: boolean;
+  role_name?: string;
+  access_right_name?: string;
+  created_at?: number;
+  updated_at?: number;
+}
+
 export interface LoginRequest {
   username: string;
   password: string;

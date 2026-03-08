@@ -9,10 +9,6 @@ import { useEffect } from "react";
 
 // Pages
 import DashboardPage from "@/pages/DashboardPage";
-import UsersPage from "@/pages/UsersPage";
-import RolesPage from "@/pages/RolesPage";
-import OrganizationsPage from "@/pages/OrganizationsPage";
-import ProjectsPage from "@/pages/ProjectsPage";
 import SettingsPage from "@/pages/SettingsPage";
 import LoginPage from "@/pages/LoginPage";
 import RegisterPage from "@/pages/RegisterPage";
@@ -21,6 +17,14 @@ import ResetPasswordPage from "@/pages/ResetPasswordPage";
 import DesignSystemPage from "@/pages/DesignSystemPage";
 import ComponentShowcasePage from "@/pages/ComponentShowcasePage";
 import NotFound from "@/pages/NotFound";
+
+// Feature CRUD pages
+import UsersPage from "@/features/users/userPage";
+import RolesPage from "@/features/roles/rolePage";
+import OrganizationsPage from "@/features/organizations/organizationPage";
+import ProjectsPage from "@/features/projects/projectPage";
+import AccessRightsPage from "@/features/access-rights/accessRightPage";
+import PermissionsPage from "@/features/permissions/permissionPage";
 
 // Showcase subpages
 import ShowcaseButtons from "@/pages/showcase/ShowcaseButtons";
@@ -68,6 +72,8 @@ const App = () => (
               <Route path="/roles" element={<RolesPage />} />
               <Route path="/organizations" element={<OrganizationsPage />} />
               <Route path="/projects" element={<ProjectsPage />} />
+              <Route path="/access-rights" element={<AccessRightsPage />} />
+              <Route path="/permissions" element={<PermissionsPage />} />
               <Route path="/settings" element={<SettingsPage />} />
               <Route path="/design-system" element={<DesignSystemPage />} />
               <Route path="/components" element={<ComponentShowcasePage />} />
