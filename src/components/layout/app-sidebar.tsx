@@ -59,6 +59,7 @@ const navSections: NavSection[] = [
     label: "System",
     items: [
       { label: "Audit Logs", path: "/audit-logs", icon: FileText },
+      { label: "Uploads", path: "/uploads", icon: Upload },
       { label: "Settings", path: "/settings", icon: Settings },
       { label: "Design System", path: "/design-system", icon: Palette },
       { label: "Components", path: "/components", icon: Component },
