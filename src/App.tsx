@@ -75,6 +75,7 @@ const App = () => (
               <Route path="/projects" element={<ProjectsPage />} />
               <Route path="/access-rights" element={<AccessRightsPage />} />
               <Route path="/permissions" element={<PermissionsPage />} />
+              <Route path="/audit-logs" element={<AuditLogsPage />} />
               <Route path="/settings" element={<SettingsPage />} />
               <Route path="/design-system" element={<DesignSystemPage />} />
               <Route path="/components" element={<ComponentShowcasePage />} />
