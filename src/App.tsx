@@ -80,6 +80,7 @@ const App = () => (
               <Route path="/components/overlays" element={<ShowcaseOverlays />} />
               <Route path="/components/navigation" element={<ShowcaseNavigation />} />
               <Route path="/components/charts" element={<ShowcaseCharts />} />
+              <Route path="/components/realtime" element={<ShowcaseRealtime />} />
             </Route>
 
             <Route path="*" element={<NotFound />} />
