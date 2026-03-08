@@ -33,6 +33,8 @@ import OrganizationsPage from "@/features/organizations/organizationPage";
 import ProjectsPage from "@/features/projects/projectPage";
 import AccessRightsPage from "@/features/access-rights/accessRightPage";
 import PermissionsPage from "@/features/permissions/permissionPage";
+import ResourcesPage from "@/features/resources/resourcePage";
+import EndpointsPage from "@/features/endpoints/endpointPage";
 
 // Showcase subpages
 import ShowcaseButtons from "@/pages/showcase/ShowcaseButtons";
