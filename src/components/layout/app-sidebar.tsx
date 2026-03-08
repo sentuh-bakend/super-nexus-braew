@@ -4,7 +4,7 @@ import { useUIStore } from "@/stores";
 import {
   LayoutDashboard, Users, Shield, Building2, FolderKanban, Settings,
   ChevronLeft, ChevronRight, Hexagon, Palette, Component, KeyRound, Lock,
-  ChevronDown, FileText, UserCheck, ShieldCheck,
+  ChevronDown, FileText, UserCheck, ShieldCheck, Upload,
 } from "lucide-react";
 import { useState } from "react";
 import { OrganizationSwitcher } from "@/features/organizations/organization-switcher";
