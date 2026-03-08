@@ -57,6 +57,8 @@ const App = () => (
               <Route path="/organizations" element={<OrganizationsPage />} />
               <Route path="/projects" element={<ProjectsPage />} />
               <Route path="/settings" element={<SettingsPage />} />
+              <Route path="/design-system" element={<DesignSystemPage />} />
+              <Route path="/components" element={<ComponentShowcasePage />} />
             </Route>
 
             <Route path="*" element={<NotFound />} />

@@ -11,6 +11,8 @@ import {
   ChevronLeft,
   ChevronRight,
   Hexagon,
+  Palette,
+  Component,
 } from "lucide-react";
 
 const navItems = [
@@ -20,6 +22,8 @@ const navItems = [
   { label: "Organizations", path: "/organizations", icon: Building2 },
   { label: "Projects", path: "/projects", icon: FolderKanban },
   { label: "Settings", path: "/settings", icon: Settings },
+  { label: "Design System", path: "/design-system", icon: Palette },
+  { label: "Components", path: "/components", icon: Component },
 ];
 
 export function AppSidebar() {

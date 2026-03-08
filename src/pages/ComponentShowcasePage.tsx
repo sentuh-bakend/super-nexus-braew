@@ -130,10 +130,10 @@ export default function ComponentShowcasePage() {
       {/* Stat Cards */}
       <Section title="Stat Cards">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <StatCard title="Total Users" value="2,847" trend={{ value: 12.5, positive: true }} icon={Users} />
-          <StatCard title="Active Roles" value="18" trend={{ value: 2, positive: true }} icon={ShieldCheck} />
-          <StatCard title="Activity" value="94.2%" trend={{ value: -1.3, positive: false }} icon={Activity} />
-          <StatCard title="Growth" value="+340" trend={{ value: 8.1, positive: true }} icon={TrendingUp} />
+          <StatCard title="Total Users" value="2,847" trend={{ value: 12.5, label: "vs last month" }} icon={Users} />
+          <StatCard title="Active Roles" value="18" trend={{ value: 2, label: "new" }} icon={ShieldCheck} />
+          <StatCard title="Activity" value="94.2%" trend={{ value: -1.3, label: "vs last week" }} icon={Activity} />
+          <StatCard title="Growth" value="+340" trend={{ value: 8.1, label: "this quarter" }} icon={TrendingUp} />
         </div>
       </Section>
 
