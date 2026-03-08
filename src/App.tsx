@@ -20,6 +20,7 @@ import NotFound from "@/pages/NotFound";
 import AuditLogsPage from "@/pages/AuditLogsPage";
 import RolesPermissionsPage from "@/pages/RolesPermissionsPage";
 import WorkspacePage from "@/pages/WorkspacePage";
+import UploadsPage from "@/pages/UploadsPage";
 
 // Feature CRUD pages
 import UsersPage from "@/features/users/userPage";
