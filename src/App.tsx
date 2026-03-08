@@ -63,51 +63,54 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <ThemeInitializer>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            {/* Auth pages (no layout) */}
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
-            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-            <Route path="/reset-password" element={<ResetPasswordPage />} />
+        <ErrorBoundary>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Routes>
+              {/* Auth pages (no layout) */}
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/register" element={<RegisterPage />} />
+              <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+              <Route path="/reset-password" element={<ResetPasswordPage />} />
 
-            {/* App pages (with layout) */}
-            <Route element={<AppLayout />}>
-              <Route path="/" element={<DashboardPage />} />
-              <Route path="/users" element={<UsersPage />} />
-              <Route path="/roles" element={<RolesPage />} />
-              <Route path="/organizations" element={<OrganizationsPage />} />
-              <Route path="/workspace" element={<WorkspacePage />} />
-              <Route path="/projects" element={<ProjectsPage />} />
-              <Route path="/access-rights" element={<AccessRightsPage />} />
-              <Route path="/permissions" element={<PermissionsPage />} />
-              <Route path="/roles-permissions" element={<RolesPermissionsPage />} />
-              <Route path="/audit-logs" element={<AuditLogsPage />} />
-              <Route path="/system-health" element={<SystemHealthPage />} />
-              <Route path="/system-insights" element={<SystemInsightsPage />} />
-              <Route path="/uploads" element={<UploadsPage />} />
-              <Route path="/settings" element={<SettingsPage />} />
-              <Route path="/design-system" element={<DesignSystemPage />} />
-              <Route path="/components" element={<ComponentShowcasePage />} />
-              <Route path="/components/buttons" element={<ShowcaseButtons />} />
-              <Route path="/components/badges" element={<ShowcaseBadges />} />
-              <Route path="/components/forms" element={<ShowcaseForms />} />
-              <Route path="/components/cards" element={<ShowcaseCards />} />
-              <Route path="/components/feedback" element={<ShowcaseFeedback />} />
-              <Route path="/components/data-display" element={<ShowcaseDataDisplay />} />
-              <Route path="/components/overlays" element={<ShowcaseOverlays />} />
-              <Route path="/components/navigation" element={<ShowcaseNavigation />} />
-              <Route path="/components/charts" element={<ShowcaseCharts />} />
-              <Route path="/components/realtime" element={<ShowcaseRealtime />} />
-            </Route>
+              {/* App pages (with layout) */}
+              <Route element={<AppLayout />}>
+                <Route path="/" element={<DashboardPage />} />
+                <Route path="/users" element={<UsersPage />} />
+                <Route path="/roles" element={<RolesPage />} />
+                <Route path="/organizations" element={<OrganizationsPage />} />
+                <Route path="/workspace" element={<WorkspacePage />} />
+                <Route path="/projects" element={<ProjectsPage />} />
+                <Route path="/access-rights" element={<AccessRightsPage />} />
+                <Route path="/permissions" element={<PermissionsPage />} />
+                <Route path="/roles-permissions" element={<RolesPermissionsPage />} />
+                <Route path="/audit-logs" element={<AuditLogsPage />} />
+                <Route path="/system-health" element={<SystemHealthPage />} />
+                <Route path="/system-insights" element={<SystemInsightsPage />} />
+                <Route path="/uploads" element={<UploadsPage />} />
+                <Route path="/settings" element={<SettingsPage />} />
+                <Route path="/design-system" element={<DesignSystemPage />} />
+                <Route path="/components" element={<ComponentShowcasePage />} />
+                <Route path="/components/buttons" element={<ShowcaseButtons />} />
+                <Route path="/components/badges" element={<ShowcaseBadges />} />
+                <Route path="/components/forms" element={<ShowcaseForms />} />
+                <Route path="/components/cards" element={<ShowcaseCards />} />
+                <Route path="/components/feedback" element={<ShowcaseFeedback />} />
+                <Route path="/components/data-display" element={<ShowcaseDataDisplay />} />
+                <Route path="/components/overlays" element={<ShowcaseOverlays />} />
+                <Route path="/components/navigation" element={<ShowcaseNavigation />} />
+                <Route path="/components/charts" element={<ShowcaseCharts />} />
+                <Route path="/components/realtime" element={<ShowcaseRealtime />} />
+              </Route>
 
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </ErrorBoundary>
       </ThemeInitializer>
     </TooltipProvider>
+    <ReactQueryDevtools initialIsOpen={false} />
   </QueryClientProvider>
 );
 
