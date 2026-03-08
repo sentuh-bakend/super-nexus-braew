@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AppLayout } from "@/components/layout/app-layout";
 import { useUIStore } from "@/stores";
 import { useEffect } from "react";
+import { ErrorBoundary } from "@/components/ui/error-boundary";
 
 // Pages
 import DashboardPage from "@/pages/DashboardPage";
