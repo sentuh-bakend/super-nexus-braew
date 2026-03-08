@@ -1,0 +1,41 @@
+import { PageHeader } from "@/components/layout/page-header";
+import { FileUploader } from "@/components/upload/file-uploader";
+import { UploadQueue } from "@/components/upload/upload-queue";
+import { FilePreview } from "@/components/upload/file-preview";
+import { useUploadStore } from "@/lib/upload/upload-store";
+import { NexusCard } from "@/components/ui/nexus-card";
+
+export default function UploadsPage() {
+  const items = useUploadStore((s) => s.items);
+  const completed = items.filter((i) => i.status === "complete");
+
+  return (
+    <div className="space-y-6">
+      <PageHeader
+        title="File Upload"
+        description="Resumable file uploads with TUS protocol — drag & drop, pause, resume, retry"
+      />
+
+      <FileUploader />
+
+      <UploadQueue />
+
+      {completed.length > 0 && (
+        <div>
+          <h3 className="text-sm font-semibold text-foreground mb-3">Completed Uploads</h3>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+            {completed.map((item) => (
+              <FilePreview key={item.id} file={item.file} url={item.url} />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {items.length === 0 && (
+        <NexusCard className="p-8 text-center text-muted-foreground text-sm">
+          No uploads yet. Drop files above or click to browse.
+        </NexusCard>
+      )}
+    </div>
+  );
+}
