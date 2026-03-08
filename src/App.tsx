@@ -83,6 +83,8 @@ const App = () => (
               <Route path="/permissions" element={<PermissionsPage />} />
               <Route path="/roles-permissions" element={<RolesPermissionsPage />} />
               <Route path="/audit-logs" element={<AuditLogsPage />} />
+              <Route path="/system-health" element={<SystemHealthPage />} />
+              <Route path="/system-insights" element={<SystemInsightsPage />} />
               <Route path="/uploads" element={<UploadsPage />} />
               <Route path="/settings" element={<SettingsPage />} />
               <Route path="/design-system" element={<DesignSystemPage />} />
