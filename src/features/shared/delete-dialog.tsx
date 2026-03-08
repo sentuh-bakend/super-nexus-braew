@@ -47,7 +47,7 @@ export function DeleteDialog({ open, onOpenChange, resourceName, itemName, onCon
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel disabled={deleting}>Cancel</AlertDialogCancel>
-          <NexusButton variant="destructive" onClick={handleConfirm} disabled={deleting}>
+          <NexusButton variant="danger" onClick={handleConfirm} disabled={deleting}>
             {deleting && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
             Delete
           </NexusButton>

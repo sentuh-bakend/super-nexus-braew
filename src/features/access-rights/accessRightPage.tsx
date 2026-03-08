@@ -17,7 +17,7 @@ const mockData: AccessRight[] = [
   { id: "7", name: "Write Projects", resource: "projects", action: "write", created_at: 1700600000 },
 ];
 
-const actionColor = (a: string) => a === "read" ? "info" as const : a === "write" ? "warning" as const : a === "delete" ? "danger" as const : "primary" as const;
+const actionColor = (a: string) => a === "read" ? "info" as const : a === "write" ? "warning" as const : a === "delete" ? "danger" as const : "neutral" as const;
 
 const columns: CrudColumnDef<AccessRight>[] = [
   { id: "name", header: "Name", accessorKey: "name", sortable: true, minWidth: 180 },
