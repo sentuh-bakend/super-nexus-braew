@@ -18,6 +18,7 @@ import DesignSystemPage from "@/pages/DesignSystemPage";
 import ComponentShowcasePage from "@/pages/ComponentShowcasePage";
 import NotFound from "@/pages/NotFound";
 import AuditLogsPage from "@/pages/AuditLogsPage";
+import RolesPermissionsPage from "@/pages/RolesPermissionsPage";
 
 // Feature CRUD pages
 import UsersPage from "@/features/users/userPage";
