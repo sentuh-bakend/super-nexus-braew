@@ -32,6 +32,7 @@ import ShowcaseDataDisplay from "@/pages/showcase/ShowcaseDataDisplay";
 import ShowcaseOverlays from "@/pages/showcase/ShowcaseOverlays";
 import ShowcaseNavigation from "@/pages/showcase/ShowcaseNavigation";
 import ShowcaseCharts from "@/pages/showcase/ShowcaseCharts";
+import ShowcaseRealtime from "@/pages/showcase/ShowcaseRealtime";
 
 const queryClient = new QueryClient();
 
