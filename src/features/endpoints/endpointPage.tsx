@@ -61,7 +61,7 @@ const schema = z.object({
   auth_required: z.boolean().optional(),
 });
 
-const fields: FieldDef[] = [
+const baseFields: FieldDef[] = [
   { name: "name", label: "Endpoint Name", type: "text", required: true, placeholder: "e.g. List Users" },
   {
     name: "method", label: "HTTP Method", type: "select", required: true,
@@ -72,14 +72,6 @@ const fields: FieldDef[] = [
     ],
   },
   { name: "path", label: "Path", type: "text", required: true, placeholder: "/api/v1/users" },
-  {
-    name: "resource_id", label: "Resource", type: "select", required: true,
-    options: [
-      { label: "Users", value: "1" }, { label: "Projects", value: "2" },
-      { label: "Roles", value: "3" }, { label: "Organizations", value: "4" },
-      { label: "Audit Logs", value: "5" }, { label: "System", value: "6" },
-    ],
-  },
   { name: "description", label: "Description", type: "textarea", placeholder: "Describe what this endpoint does…" },
   { name: "auth_required", label: "Authentication Required", type: "switch" },
 ];
