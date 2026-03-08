@@ -1,21 +1,28 @@
-import apiClient from './client';
-import type { LoginRequest, RegisterRequest, LoginResponse, TokenResponse, User } from './types';
+import { apiClient } from './client';
+import {
+  loginRequestSchema, registerRequestSchema,
+  loginResponseSchema, tokenResponseSchema, userSchema,
+  type LoginRequest, type RegisterRequest, type LoginResponse, type TokenResponse, type User,
+} from './schemas';
 
 export const authApi = {
-  login: (data: LoginRequest) =>
-    apiClient.post<LoginResponse>('/auth/login', data),
+  login: (data: LoginRequest) => {
+    loginRequestSchema.parse(data);
+    return apiClient.post<LoginResponse>('/auth/login', data, loginResponseSchema);
+  },
 
-  register: (data: RegisterRequest) =>
-    apiClient.post<LoginResponse>('/auth/register', data),
+  register: (data: RegisterRequest) => {
+    registerRequestSchema.parse(data);
+    return apiClient.post<LoginResponse>('/auth/register', data, loginResponseSchema);
+  },
 
-  logout: () =>
-    apiClient.post('/auth/logout'),
+  logout: () => apiClient.post('/auth/logout'),
 
   refreshToken: (refreshToken: string) =>
-    apiClient.post<TokenResponse>('/auth/refresh', { refresh_token: refreshToken }),
+    apiClient.post<TokenResponse>('/auth/refresh', { refresh_token: refreshToken }, tokenResponseSchema),
 
   getCurrentUser: () =>
-    apiClient.get<User>('/auth/me'),
+    apiClient.get<User>('/auth/me', userSchema),
 
   forgotPassword: (email: string) =>
     apiClient.post('/auth/forgot-password', { email }),
