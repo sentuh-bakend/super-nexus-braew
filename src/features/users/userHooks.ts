@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { userService } from './userService';
 import { toast } from 'sonner';
+import type { User } from '@/lib/api/schemas';
 
 const USERS_KEY = ['users'];
 
@@ -31,7 +32,7 @@ export function useCreateUser() {
 export function useUpdateUser() {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: ({ id, data }: { id: string; data: Partial<any> }) => userService.update(id, data),
+    mutationFn: ({ id, data }: { id: string; data: Partial<User> }) => userService.update(id, data),
     onSuccess: () => { qc.invalidateQueries({ queryKey: USERS_KEY }); toast.success('User updated'); },
     onError: () => toast.error('Failed to update user'),
   });

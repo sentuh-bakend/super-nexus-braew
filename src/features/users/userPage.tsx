@@ -1,13 +1,15 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { z } from "zod";
 import { PageHeader } from "@/components/layout/page-header";
 import { NexusButton } from "@/components/ui/nexus-button";
 import { NexusBadge } from "@/components/ui/nexus-badge";
 import { CrudTable, CrudFormDialog, DeleteDialog, type CrudColumnDef, type FieldDef } from "@/features/shared";
 import { Plus } from "lucide-react";
-import type { User } from "@/lib/api/types";
+import { useUsers, useCreateUser, useUpdateUser, useDeleteUser } from "./userHooks";
+import type { User } from "@/lib/api/schemas";
+import { Skeleton } from "@/components/ui/skeleton";
 
-/* ── Mock data (replace with useUsers() hook when API is ready) ── */
+/* ── Fallback mock data (used when API is not available) ── */
 const mockUsers: (User & { id: string })[] = [
   { id: "1", name: "Alice Johnson", email: "alice@nexus.io", username: "alice", role: "Admin", status: "active", created_at: 1700000000 },
   { id: "2", name: "Bob Smith", email: "bob@nexus.io", username: "bob", role: "Editor", status: "active", created_at: 1700100000 },
@@ -19,7 +21,9 @@ const mockUsers: (User & { id: string })[] = [
   { id: "8", name: "Henry Wilson", email: "henry@nexus.io", username: "henry", role: "Editor", status: "suspended", created_at: 1700700000 },
 ];
 
-const columns: CrudColumnDef<typeof mockUsers[0]>[] = [
+type UserRow = User & { id: string };
+
+const columns: CrudColumnDef<UserRow>[] = [
   {
     id: "name", header: "Name", accessorKey: "name", sortable: true, minWidth: 200,
     cell: (row) => (
@@ -92,8 +96,20 @@ const editFields: FieldDef[] = [
 
 export default function UsersPage() {
   const [createOpen, setCreateOpen] = useState(false);
-  const [editItem, setEditItem] = useState<typeof mockUsers[0] | null>(null);
-  const [deleteItem, setDeleteItem] = useState<typeof mockUsers[0] | null>(null);
+  const [editItem, setEditItem] = useState<UserRow | null>(null);
+  const [deleteItem, setDeleteItem] = useState<UserRow | null>(null);
+
+  const { data: usersResponse, isLoading, isError } = useUsers();
+  const createUser = useCreateUser();
+  const updateUser = useUpdateUser();
+  const deleteUser = useDeleteUser();
+
+  // Use API data if available, fallback to mock
+  const users: UserRow[] = useMemo(() => {
+    if (usersResponse?.data) return usersResponse.data as UserRow[];
+    if (isError) return mockUsers;
+    return mockUsers;
+  }, [usersResponse, isError]);
 
   return (
     <div className="space-y-6">
@@ -107,14 +123,27 @@ export default function UsersPage() {
         }
       />
 
-      <CrudTable
-        columns={columns}
-        data={mockUsers}
-        selectable
-        onEdit={setEditItem}
-        onDelete={setDeleteItem}
-        bulkActions={[{ label: "Delete Selected", onClick: (ids) => console.log("bulk delete", ids) }]}
-      />
+      {isLoading ? (
+        <div className="space-y-3">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <Skeleton key={i} className="h-14 w-full rounded-lg" />
+          ))}
+        </div>
+      ) : (
+        <CrudTable
+          columns={columns}
+          data={users}
+          selectable
+          onEdit={setEditItem}
+          onDelete={setDeleteItem}
+          bulkActions={[{
+            label: "Delete Selected",
+            onClick: (ids) => {
+              ids.forEach(id => deleteUser.mutate(id));
+            },
+          }]}
+        />
+      )}
 
       <CrudFormDialog
         open={createOpen}
@@ -123,7 +152,10 @@ export default function UsersPage() {
         description="Add a new user to the system."
         fields={createFields}
         schema={createSchema}
-        onSubmit={async (values) => { console.log("create", values); }}
+        onSubmit={async (values) => {
+          await createUser.mutateAsync(values as any);
+          setCreateOpen(false);
+        }}
         submitLabel="Create User"
       />
 
@@ -135,7 +167,12 @@ export default function UsersPage() {
         fields={editFields}
         schema={editSchema}
         initialValues={editItem || undefined}
-        onSubmit={async (values) => { console.log("update", editItem?.id, values); }}
+        onSubmit={async (values) => {
+          if (editItem) {
+            await updateUser.mutateAsync({ id: editItem.id, data: values as any });
+            setEditItem(null);
+          }
+        }}
         submitLabel="Save Changes"
       />
 
@@ -144,7 +181,12 @@ export default function UsersPage() {
         onOpenChange={(open) => !open && setDeleteItem(null)}
         resourceName="User"
         itemName={deleteItem?.name}
-        onConfirm={async () => { console.log("delete", deleteItem?.id); }}
+        onConfirm={async () => {
+          if (deleteItem) {
+            await deleteUser.mutateAsync(deleteItem.id);
+            setDeleteItem(null);
+          }
+        }}
       />
     </div>
   );
