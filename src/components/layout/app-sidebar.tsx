@@ -4,7 +4,7 @@ import { useUIStore } from "@/stores";
 import {
   LayoutDashboard, Users, Shield, Building2, FolderKanban, Settings,
   ChevronLeft, ChevronRight, Hexagon, Palette, Component, KeyRound, Lock,
-  ChevronDown, FileText, UserCheck, ShieldCheck,
+  ChevronDown, FileText, UserCheck, ShieldCheck, Upload,
 } from "lucide-react";
 import { useState } from "react";
 import { OrganizationSwitcher } from "@/features/organizations/organization-switcher";
@@ -59,6 +59,7 @@ const navSections: NavSection[] = [
     label: "System",
     items: [
       { label: "Audit Logs", path: "/audit-logs", icon: FileText },
+      { label: "Uploads", path: "/uploads", icon: Upload },
       { label: "Settings", path: "/settings", icon: Settings },
       { label: "Design System", path: "/design-system", icon: Palette },
       { label: "Components", path: "/components", icon: Component },

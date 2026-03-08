@@ -20,6 +20,7 @@ import NotFound from "@/pages/NotFound";
 import AuditLogsPage from "@/pages/AuditLogsPage";
 import RolesPermissionsPage from "@/pages/RolesPermissionsPage";
 import WorkspacePage from "@/pages/WorkspacePage";
+import UploadsPage from "@/pages/UploadsPage";
 
 // Feature CRUD pages
 import UsersPage from "@/features/users/userPage";
@@ -80,6 +81,7 @@ const App = () => (
               <Route path="/permissions" element={<PermissionsPage />} />
               <Route path="/roles-permissions" element={<RolesPermissionsPage />} />
               <Route path="/audit-logs" element={<AuditLogsPage />} />
+              <Route path="/uploads" element={<UploadsPage />} />
               <Route path="/settings" element={<SettingsPage />} />
               <Route path="/design-system" element={<DesignSystemPage />} />
               <Route path="/components" element={<ComponentShowcasePage />} />
