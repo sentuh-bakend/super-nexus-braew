@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { Organization, OrgMember } from '@/lib/api/types';
+import type { Organization, OrgMember } from '@/lib/api/schemas';
 
 interface OrganizationState {
   activeOrganization: Organization | null;
