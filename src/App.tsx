@@ -22,6 +22,17 @@ import DesignSystemPage from "@/pages/DesignSystemPage";
 import ComponentShowcasePage from "@/pages/ComponentShowcasePage";
 import NotFound from "@/pages/NotFound";
 
+// Showcase subpages
+import ShowcaseButtons from "@/pages/showcase/ShowcaseButtons";
+import ShowcaseBadges from "@/pages/showcase/ShowcaseBadges";
+import ShowcaseForms from "@/pages/showcase/ShowcaseForms";
+import ShowcaseCards from "@/pages/showcase/ShowcaseCards";
+import ShowcaseFeedback from "@/pages/showcase/ShowcaseFeedback";
+import ShowcaseDataDisplay from "@/pages/showcase/ShowcaseDataDisplay";
+import ShowcaseOverlays from "@/pages/showcase/ShowcaseOverlays";
+import ShowcaseNavigation from "@/pages/showcase/ShowcaseNavigation";
+import ShowcaseCharts from "@/pages/showcase/ShowcaseCharts";
+
 const queryClient = new QueryClient();
 
 function ThemeInitializer({ children }: { children: React.ReactNode }) {
@@ -59,6 +70,15 @@ const App = () => (
               <Route path="/settings" element={<SettingsPage />} />
               <Route path="/design-system" element={<DesignSystemPage />} />
               <Route path="/components" element={<ComponentShowcasePage />} />
+              <Route path="/components/buttons" element={<ShowcaseButtons />} />
+              <Route path="/components/badges" element={<ShowcaseBadges />} />
+              <Route path="/components/forms" element={<ShowcaseForms />} />
+              <Route path="/components/cards" element={<ShowcaseCards />} />
+              <Route path="/components/feedback" element={<ShowcaseFeedback />} />
+              <Route path="/components/data-display" element={<ShowcaseDataDisplay />} />
+              <Route path="/components/overlays" element={<ShowcaseOverlays />} />
+              <Route path="/components/navigation" element={<ShowcaseNavigation />} />
+              <Route path="/components/charts" element={<ShowcaseCharts />} />
             </Route>
 
             <Route path="*" element={<NotFound />} />
