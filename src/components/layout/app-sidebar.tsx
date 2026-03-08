@@ -49,8 +49,9 @@ const navSections: NavSection[] = [
     label: "Organization",
     defaultOpen: true,
     items: [
+      { label: "Workspace", path: "/workspace", icon: Building2 },
       { label: "Organizations", path: "/organizations", icon: Building2 },
-      { label: "Members", path: "/users", icon: UserCheck },
+      { label: "Members", path: "/workspace", icon: UserCheck },
       { label: "Projects", path: "/projects", icon: FolderKanban },
     ],
   },
