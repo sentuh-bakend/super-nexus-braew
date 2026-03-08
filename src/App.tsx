@@ -18,6 +18,8 @@ import LoginPage from "@/pages/LoginPage";
 import RegisterPage from "@/pages/RegisterPage";
 import ForgotPasswordPage from "@/pages/ForgotPasswordPage";
 import ResetPasswordPage from "@/pages/ResetPasswordPage";
+import DesignSystemPage from "@/pages/DesignSystemPage";
+import ComponentShowcasePage from "@/pages/ComponentShowcasePage";
 import NotFound from "@/pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -55,6 +57,8 @@ const App = () => (
               <Route path="/organizations" element={<OrganizationsPage />} />
               <Route path="/projects" element={<ProjectsPage />} />
               <Route path="/settings" element={<SettingsPage />} />
+              <Route path="/design-system" element={<DesignSystemPage />} />
+              <Route path="/components" element={<ComponentShowcasePage />} />
             </Route>
 
             <Route path="*" element={<NotFound />} />
