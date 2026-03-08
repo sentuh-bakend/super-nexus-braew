@@ -40,7 +40,7 @@ export default function LoginPage() {
 
     setLoading(true);
     try {
-      const res = await authApi.login(result.data);
+      const res = await authApi.login(result.data as { username: string; password: string });
       login(res.user, res.access_token);
       toast.success("Login berhasil!");
       navigate("/");

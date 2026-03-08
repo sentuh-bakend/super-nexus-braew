@@ -48,7 +48,7 @@ export default function RegisterPage() {
     setLoading(true);
     try {
       const { confirmPassword: _, ...data } = result.data;
-      const res = await authApi.register(data);
+      const res = await authApi.register(data as { name: string; email: string; username: string; password: string });
       login(res.user, res.access_token);
       toast.success("Registrasi berhasil!");
       navigate("/");
