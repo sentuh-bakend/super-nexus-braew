@@ -44,6 +44,8 @@ const navSections: NavSection[] = [
       { label: "Permissions", path: "/permissions", icon: Lock },
       { label: "Access Rights", path: "/access-rights", icon: KeyRound },
       { label: "Role Permissions", path: "/roles-permissions", icon: ShieldCheck },
+      { label: "Resources", path: "/resources", icon: Box },
+      { label: "Endpoints", path: "/endpoints", icon: Globe },
     ],
   },
   {
