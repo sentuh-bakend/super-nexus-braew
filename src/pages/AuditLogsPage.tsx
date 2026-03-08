@@ -23,7 +23,6 @@ export default function AuditLogsPage() {
       <PageHeader
         title="Audit Logs"
         description="System activity and change history"
-        icon={<FileText className="h-6 w-6" />}
       />
       <NexusCard className="overflow-hidden">
         <div className="overflow-x-auto">
