@@ -32,6 +32,7 @@ import ShowcaseDataDisplay from "@/pages/showcase/ShowcaseDataDisplay";
 import ShowcaseOverlays from "@/pages/showcase/ShowcaseOverlays";
 import ShowcaseNavigation from "@/pages/showcase/ShowcaseNavigation";
 import ShowcaseCharts from "@/pages/showcase/ShowcaseCharts";
+import ShowcaseRealtime from "@/pages/showcase/ShowcaseRealtime";
 
 const queryClient = new QueryClient();
 
@@ -79,6 +80,7 @@ const App = () => (
               <Route path="/components/overlays" element={<ShowcaseOverlays />} />
               <Route path="/components/navigation" element={<ShowcaseNavigation />} />
               <Route path="/components/charts" element={<ShowcaseCharts />} />
+              <Route path="/components/realtime" element={<ShowcaseRealtime />} />
             </Route>
 
             <Route path="*" element={<NotFound />} />
