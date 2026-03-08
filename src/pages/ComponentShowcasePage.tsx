@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { PageHeader } from "@/components/layout/page-header";
 import {
   MousePointerClick, Tag, FormInput, CreditCard, MessageSquare,
-  Table2, Layers, Navigation, BarChart3,
+  Table2, Layers, Navigation, BarChart3, Wifi,
 } from "lucide-react";
 
 const categories = [
@@ -15,6 +15,7 @@ const categories = [
   { label: "Overlays", description: "Dialogs, tooltips, and popovers", path: "/components/overlays", icon: Layers },
   { label: "Navigation", description: "Sidebar, mega dropdown, breadcrumb", path: "/components/navigation", icon: Navigation },
   { label: "Charts", description: "Line, Area, Bar, Pie, Heatmap, Sparkline", path: "/components/charts", icon: BarChart3 },
+  { label: "Realtime", description: "SSE, WebSocket, presence, live feed", path: "/components/realtime", icon: Wifi },
 ];
 
 export default function ComponentsIndexPage() {
