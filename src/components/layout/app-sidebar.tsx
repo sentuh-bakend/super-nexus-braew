@@ -2,23 +2,16 @@ import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { useUIStore } from "@/stores";
 import {
-  LayoutDashboard,
-  Users,
-  Shield,
-  Building2,
-  FolderKanban,
-  Settings,
-  ChevronLeft,
-  ChevronRight,
-  Hexagon,
-  Palette,
-  Component,
+  LayoutDashboard, Users, Shield, Building2, FolderKanban, Settings,
+  ChevronLeft, ChevronRight, Hexagon, Palette, Component, KeyRound, Lock,
 } from "lucide-react";
 
 const navItems = [
   { label: "Dashboard", path: "/", icon: LayoutDashboard },
   { label: "Users", path: "/users", icon: Users },
   { label: "Roles", path: "/roles", icon: Shield },
+  { label: "Access Rights", path: "/access-rights", icon: KeyRound },
+  { label: "Permissions", path: "/permissions", icon: Lock },
   { label: "Organizations", path: "/organizations", icon: Building2 },
   { label: "Projects", path: "/projects", icon: FolderKanban },
   { label: "Settings", path: "/settings", icon: Settings },
