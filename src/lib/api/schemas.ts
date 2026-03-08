@@ -1,11 +1,10 @@
 import { z } from 'zod';
 
 // ── Primitives ──
-export const idSchema = z.string().uuid();
 export const emailSchema = z.string().trim().email().max(255);
 export const timestampSchema = z.number().optional();
 
-// ── Types (explicit interfaces for clean required/optional separation) ──
+// ── Types ──
 
 export interface User {
   id: string;
@@ -134,9 +133,9 @@ export interface SystemInsight {
   most_active_role: string;
 }
 
-// ── Zod Schemas (for runtime validation) ──
+// ── Zod Schemas (runtime validation only, no type annotations to avoid Zod v3.25+ inference issues) ──
 
-export const userSchema: z.ZodType<User> = z.object({
+export const userSchema = z.object({
   id: z.string(),
   name: z.string().trim().min(1).max(100),
   email: emailSchema,
@@ -148,7 +147,7 @@ export const userSchema: z.ZodType<User> = z.object({
   updated_at: timestampSchema,
 });
 
-export const roleSchema: z.ZodType<Role> = z.object({
+export const roleSchema = z.object({
   id: z.string(),
   name: z.string().trim().min(1).max(100),
   description: z.string().max(500).optional(),
@@ -156,7 +155,7 @@ export const roleSchema: z.ZodType<Role> = z.object({
   updated_at: timestampSchema,
 });
 
-export const organizationSchema: z.ZodType<Organization> = z.object({
+export const organizationSchema = z.object({
   id: z.string(),
   name: z.string().trim().min(1).max(200),
   slug: z.string(),
@@ -167,7 +166,7 @@ export const organizationSchema: z.ZodType<Organization> = z.object({
   updated_at: timestampSchema,
 });
 
-export const orgMemberSchema: z.ZodType<OrgMember> = z.object({
+export const orgMemberSchema = z.object({
   id: z.string(),
   user_id: z.string(),
   organization_id: z.string(),
@@ -177,7 +176,7 @@ export const orgMemberSchema: z.ZodType<OrgMember> = z.object({
   user: z.lazy(() => userSchema).optional(),
 });
 
-export const projectSchema: z.ZodType<Project> = z.object({
+export const projectSchema = z.object({
   id: z.string(),
   name: z.string().trim().min(1).max(200),
   slug: z.string(),
@@ -188,7 +187,7 @@ export const projectSchema: z.ZodType<Project> = z.object({
   updated_at: timestampSchema,
 });
 
-export const accessRightSchema: z.ZodType<AccessRight> = z.object({
+export const accessRightSchema = z.object({
   id: z.string(),
   name: z.string(),
   resource: z.string(),
@@ -198,7 +197,7 @@ export const accessRightSchema: z.ZodType<AccessRight> = z.object({
   updated_at: timestampSchema,
 });
 
-export const permissionSchema: z.ZodType<Permission> = z.object({
+export const permissionSchema = z.object({
   id: z.string(),
   role_id: z.string(),
   access_right_id: z.string(),
@@ -209,19 +208,19 @@ export const permissionSchema: z.ZodType<Permission> = z.object({
   updated_at: timestampSchema,
 });
 
-export const loginRequestSchema: z.ZodType<LoginRequest> = z.object({
+export const loginRequestSchema = z.object({
   username: z.string().trim().min(1, 'Username is required'),
   password: z.string().min(1, 'Password is required'),
 });
 
-export const registerRequestSchema: z.ZodType<RegisterRequest> = z.object({
+export const registerRequestSchema = z.object({
   name: z.string().trim().min(1, 'Name is required').max(100),
   email: emailSchema,
   username: z.string().trim().min(3, 'Min 3 characters').max(50),
   password: z.string().min(8, 'Min 8 characters'),
 });
 
-export const loginResponseSchema: z.ZodType<LoginResponse> = z.object({
+export const loginResponseSchema = z.object({
   access_token: z.string(),
   refresh_token: z.string(),
   expires_at: z.string(),
@@ -230,7 +229,7 @@ export const loginResponseSchema: z.ZodType<LoginResponse> = z.object({
   user: userSchema,
 });
 
-export const tokenResponseSchema: z.ZodType<TokenResponse> = z.object({
+export const tokenResponseSchema = z.object({
   access_token: z.string(),
   refresh_token: z.string(),
   expires_at: z.string(),
@@ -238,27 +237,27 @@ export const tokenResponseSchema: z.ZodType<TokenResponse> = z.object({
   token_type: z.string(),
 });
 
-export function paginatedSchema<T>(itemSchema: z.ZodType<T>) {
+export function paginatedSchema(itemSchema: z.ZodTypeAny) {
   return z.object({
     data: z.array(itemSchema),
     meta: z.object({ total: z.number() }),
   });
 }
 
-export const dashboardStatsSchema: z.ZodType<DashboardStats> = z.object({
+export const dashboardStatsSchema = z.object({
   total_users: z.number(),
   total_roles: z.number(),
   total_org_members: z.number(),
   total_audit_logs: z.number(),
 });
 
-export const activityMetricSchema: z.ZodType<ActivityMetric> = z.object({
+export const activityMetricSchema = z.object({
   date: z.string(),
   logins: z.number(),
   audits: z.number(),
 });
 
-export const systemInsightSchema: z.ZodType<SystemInsight> = z.object({
+export const systemInsightSchema = z.object({
   avg_latency_ms: z.number(),
   error_rate: z.number(),
   uptime_percent: z.number(),
