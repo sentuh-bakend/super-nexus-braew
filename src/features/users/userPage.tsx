@@ -183,7 +183,7 @@ export default function UsersPage() {
         itemName={deleteItem?.name}
         onConfirm={async () => {
           if (deleteItem) {
-            await deleteUser.mutateAsync(deleteItem.id);
+            await deleteUser.mutateAsync(String(deleteItem.id));
             setDeleteItem(null);
           }
         }}
