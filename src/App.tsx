@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AppLayout } from "@/components/layout/app-layout";
+import { AuthGuard } from "@/components/auth/auth-guard";
 import { useUIStore } from "@/stores";
 import { useEffect } from "react";
 import { ErrorBoundary } from "@/components/ui/error-boundary";
@@ -77,7 +78,7 @@ const App = () => (
               <Route path="/reset-password" element={<ResetPasswordPage />} />
 
               {/* App pages (with layout) */}
-              <Route element={<AppLayout />}>
+              <Route element={<AuthGuard><AppLayout /></AuthGuard>}>
                 <Route path="/" element={<DashboardPage />} />
                 <Route path="/users" element={<UsersPage />} />
                 <Route path="/roles" element={<RolesPage />} />
