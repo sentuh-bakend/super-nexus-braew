@@ -4,7 +4,7 @@ import { useUIStore } from "@/stores";
 import {
   LayoutDashboard, Users, Shield, Building2, FolderKanban, Settings,
   ChevronLeft, ChevronRight, Hexagon, Palette, Component, KeyRound, Lock,
-  ChevronDown, FileText, UserCheck,
+  ChevronDown, FileText, UserCheck, ShieldCheck,
 } from "lucide-react";
 import { useState } from "react";
 import {
