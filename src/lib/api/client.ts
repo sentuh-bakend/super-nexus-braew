@@ -58,7 +58,7 @@ axiosInstance.interceptors.response.use(
 // ── Type-safe request helpers ──
 
 /** Validates response data against a Zod schema in development, passes through in production. */
-function validate<T>(schema: z.ZodType<T>, data: unknown): T {
+function validate<T>(schema: z.ZodType<T> | z.ZodTypeAny, data: unknown): T {
   if (import.meta.env.DEV) {
     const result = schema.safeParse(data);
     if (!result.success) {
