@@ -139,7 +139,7 @@ export default function UsersPage() {
           bulkActions={[{
             label: "Delete Selected",
             onClick: (ids) => {
-              ids.forEach(id => deleteUser.mutate(id));
+              ids.forEach(id => deleteUser.mutate(String(id)));
             },
           }]}
         />
