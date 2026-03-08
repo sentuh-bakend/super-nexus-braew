@@ -263,3 +263,29 @@ export const systemInsightSchema = z.object({
   uptime_percent: z.number(),
   most_active_role: z.string(),
 });
+
+// ── Resource & Endpoint schemas ──
+
+export const resourceSchema = z.object({
+  id: z.string(),
+  name: z.string().trim().min(1).max(100),
+  slug: z.string().trim().min(1).max(100),
+  description: z.string().max(500).optional(),
+  status: z.string().optional(),
+  created_at: timestampSchema,
+  updated_at: timestampSchema,
+});
+
+export const endpointSchema = z.object({
+  id: z.string(),
+  name: z.string().trim().min(1).max(200),
+  method: z.enum(['GET', 'POST', 'PUT', 'PATCH', 'DELETE']),
+  path: z.string().trim().min(1).max(500),
+  resource_id: z.string(),
+  resource_name: z.string().optional(),
+  description: z.string().max(500).optional(),
+  auth_required: z.boolean().optional(),
+  status: z.string().optional(),
+  created_at: timestampSchema,
+  updated_at: timestampSchema,
+});

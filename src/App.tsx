@@ -33,6 +33,8 @@ import OrganizationsPage from "@/features/organizations/organizationPage";
 import ProjectsPage from "@/features/projects/projectPage";
 import AccessRightsPage from "@/features/access-rights/accessRightPage";
 import PermissionsPage from "@/features/permissions/permissionPage";
+import ResourcesPage from "@/features/resources/resourcePage";
+import EndpointsPage from "@/features/endpoints/endpointPage";
 
 // Showcase subpages
 import ShowcaseButtons from "@/pages/showcase/ShowcaseButtons";
@@ -84,6 +86,8 @@ const App = () => (
                 <Route path="/projects" element={<ProjectsPage />} />
                 <Route path="/access-rights" element={<AccessRightsPage />} />
                 <Route path="/permissions" element={<PermissionsPage />} />
+                <Route path="/resources" element={<ResourcesPage />} />
+                <Route path="/endpoints" element={<EndpointsPage />} />
                 <Route path="/roles-permissions" element={<RolesPermissionsPage />} />
                 <Route path="/audit-logs" element={<AuditLogsPage />} />
                 <Route path="/system-health" element={<SystemHealthPage />} />

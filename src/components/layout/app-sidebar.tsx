@@ -5,6 +5,7 @@ import {
   LayoutDashboard, Users, Shield, Building2, FolderKanban, Settings,
   ChevronLeft, ChevronRight, Hexagon, Palette, Component, KeyRound, Lock,
   ChevronDown, FileText, UserCheck, ShieldCheck, Upload, HeartPulse, BarChart3,
+  Box, Globe,
 } from "lucide-react";
 import { useState } from "react";
 import { OrganizationSwitcher } from "@/features/organizations/organization-switcher";
@@ -43,6 +44,8 @@ const navSections: NavSection[] = [
       { label: "Permissions", path: "/permissions", icon: Lock },
       { label: "Access Rights", path: "/access-rights", icon: KeyRound },
       { label: "Role Permissions", path: "/roles-permissions", icon: ShieldCheck },
+      { label: "Resources", path: "/resources", icon: Box },
+      { label: "Endpoints", path: "/endpoints", icon: Globe },
     ],
   },
   {
