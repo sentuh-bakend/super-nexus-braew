@@ -70,6 +70,15 @@ const navSections: NavSection[] = [
       { label: "Components", path: "/components", icon: Component },
     ],
   },
+  {
+    label: "Auth Pages",
+    items: [
+      { label: "Login", path: "/login", icon: LogIn },
+      { label: "Register", path: "/register", icon: UserPlus },
+      { label: "Forgot Password", path: "/forgot-password", icon: KeySquare },
+      { label: "Reset Password", path: "/reset-password", icon: KeyRound },
+    ],
+  },
 ];
 
 function SidebarSection({
