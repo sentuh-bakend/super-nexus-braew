@@ -6,7 +6,8 @@ import { NexusBadge } from "@/components/ui/nexus-badge";
 import { CrudTable, CrudFormDialog, DeleteDialog, type CrudColumnDef, type FieldDef } from "@/features/shared";
 import { Plus } from "lucide-react";
 import { useEndpoints, useCreateEndpoint, useUpdateEndpoint, useDeleteEndpoint } from "./endpointHooks";
-import type { Endpoint } from "@/lib/api/types";
+import { useResources } from "@/features/resources/resourceHooks";
+import type { Endpoint, Resource } from "@/lib/api/types";
 import { Skeleton } from "@/components/ui/skeleton";
 
 const mockData: Endpoint[] = [
@@ -60,7 +61,7 @@ const schema = z.object({
   auth_required: z.boolean().optional(),
 });
 
-const fields: FieldDef[] = [
+const baseFields: FieldDef[] = [
   { name: "name", label: "Endpoint Name", type: "text", required: true, placeholder: "e.g. List Users" },
   {
     name: "method", label: "HTTP Method", type: "select", required: true,
@@ -71,14 +72,6 @@ const fields: FieldDef[] = [
     ],
   },
   { name: "path", label: "Path", type: "text", required: true, placeholder: "/api/v1/users" },
-  {
-    name: "resource_id", label: "Resource", type: "select", required: true,
-    options: [
-      { label: "Users", value: "1" }, { label: "Projects", value: "2" },
-      { label: "Roles", value: "3" }, { label: "Organizations", value: "4" },
-      { label: "Audit Logs", value: "5" }, { label: "System", value: "6" },
-    ],
-  },
   { name: "description", label: "Description", type: "textarea", placeholder: "Describe what this endpoint does…" },
   { name: "auth_required", label: "Authentication Required", type: "switch" },
 ];
@@ -89,6 +82,7 @@ export default function EndpointsPage() {
   const [deleteItem, setDeleteItem] = useState<Endpoint | null>(null);
 
   const { data: response, isLoading, isError } = useEndpoints();
+  const { data: resourcesResponse } = useResources();
   const createEndpoint = useCreateEndpoint();
   const updateEndpoint = useUpdateEndpoint();
   const deleteEndpoint = useDeleteEndpoint();
@@ -98,6 +92,29 @@ export default function EndpointsPage() {
     if (isError) return mockData;
     return mockData;
   }, [response, isError]);
+
+  const resources: Resource[] = useMemo(() => {
+    if (resourcesResponse?.data) return resourcesResponse.data as Resource[];
+    return [
+      { id: "1", name: "Users", slug: "users" },
+      { id: "2", name: "Projects", slug: "projects" },
+      { id: "3", name: "Roles", slug: "roles" },
+      { id: "4", name: "Organizations", slug: "organizations" },
+      { id: "5", name: "Audit Logs", slug: "audit-logs" },
+      { id: "6", name: "System", slug: "system" },
+    ] as Resource[];
+  }, [resourcesResponse]);
+
+  const fields: FieldDef[] = useMemo(() => {
+    const resourceField: FieldDef = {
+      name: "resource_id", label: "Resource", type: "select", required: true,
+      options: resources.map(r => ({ label: r.name, value: r.id })),
+    };
+    // Insert resource field after "path" (index 2)
+    const result = [...baseFields];
+    result.splice(3, 0, resourceField);
+    return result;
+  }, [resources]);
 
   return (
     <div className="space-y-6">
