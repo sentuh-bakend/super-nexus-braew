@@ -7,6 +7,7 @@ import {
   ChevronDown, FileText, UserCheck, ShieldCheck,
 } from "lucide-react";
 import { useState } from "react";
+import { OrganizationSwitcher } from "@/features/organizations/organization-switcher";
 import {
   Tooltip,
   TooltipContent,
@@ -48,8 +49,9 @@ const navSections: NavSection[] = [
     label: "Organization",
     defaultOpen: true,
     items: [
+      { label: "Workspace", path: "/workspace", icon: Building2 },
       { label: "Organizations", path: "/organizations", icon: Building2 },
-      { label: "Members", path: "/users", icon: UserCheck },
+      { label: "Members", path: "/workspace", icon: UserCheck },
       { label: "Projects", path: "/projects", icon: FolderKanban },
     ],
   },
@@ -163,6 +165,11 @@ export function AppSidebar() {
         {!sidebarCollapsed && (
           <span className="text-lg font-bold text-sidebar-foreground whitespace-nowrap">NexusOS</span>
         )}
+      </div>
+
+      {/* Org Switcher */}
+      <div className="px-2 py-2 border-b border-sidebar-border">
+        <OrganizationSwitcher collapsed={sidebarCollapsed} />
       </div>
 
       {/* Nav sections */}
