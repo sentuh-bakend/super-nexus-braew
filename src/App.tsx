@@ -18,6 +18,8 @@ import DesignSystemPage from "@/pages/DesignSystemPage";
 import ComponentShowcasePage from "@/pages/ComponentShowcasePage";
 import NotFound from "@/pages/NotFound";
 import AuditLogsPage from "@/pages/AuditLogsPage";
+import SystemHealthPage from "@/pages/SystemHealthPage";
+import SystemInsightsPage from "@/pages/SystemInsightsPage";
 import RolesPermissionsPage from "@/pages/RolesPermissionsPage";
 import WorkspacePage from "@/pages/WorkspacePage";
 import UploadsPage from "@/pages/UploadsPage";
