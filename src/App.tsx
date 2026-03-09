@@ -49,6 +49,12 @@ import ShowcaseNavigation from "@/pages/showcase/ShowcaseNavigation";
 import ShowcaseCharts from "@/pages/showcase/ShowcaseCharts";
 import ShowcaseRealtime from "@/pages/showcase/ShowcaseRealtime";
 
+// Auth variations
+import LoginV1 from "@/pages/auth/LoginV1";
+import LoginV2 from "@/pages/auth/LoginV2";
+import LoginV3 from "@/pages/auth/LoginV3";
+import AuthShowcasePage from "@/pages/auth/AuthShowcasePage";
+
 const queryClient = new QueryClient();
 
 function ThemeInitializer({ children }: { children: React.ReactNode }) {
@@ -76,6 +82,9 @@ const App = () => (
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/forgot-password" element={<ForgotPasswordPage />} />
               <Route path="/reset-password" element={<ResetPasswordPage />} />
+              <Route path="/auth/login-v1" element={<LoginV1 />} />
+              <Route path="/auth/login-v2" element={<LoginV2 />} />
+              <Route path="/auth/login-v3" element={<LoginV3 />} />
 
               {/* App pages (with layout) */}
               <Route element={<AuthGuard><AppLayout /></AuthGuard>}>
@@ -107,6 +116,7 @@ const App = () => (
                 <Route path="/components/navigation" element={<ShowcaseNavigation />} />
                 <Route path="/components/charts" element={<ShowcaseCharts />} />
                 <Route path="/components/realtime" element={<ShowcaseRealtime />} />
+                <Route path="/auth-showcase" element={<AuthShowcasePage />} />
               </Route>
 
               <Route path="*" element={<NotFound />} />
