@@ -73,6 +73,10 @@ const navSections: NavSection[] = [
   {
     label: "Auth Pages",
     items: [
+      { label: "Auth Showcase", path: "/auth-showcase", icon: Palette },
+      { label: "Login V1", path: "/auth/login-v1", icon: LogIn },
+      { label: "Login V2", path: "/auth/login-v2", icon: LogIn },
+      { label: "Login V3", path: "/auth/login-v3", icon: LogIn },
       { label: "Login", path: "/login", icon: LogIn },
       { label: "Register", path: "/register", icon: UserPlus },
       { label: "Forgot Password", path: "/forgot-password", icon: KeySquare },

@@ -49,6 +49,12 @@ import ShowcaseNavigation from "@/pages/showcase/ShowcaseNavigation";
 import ShowcaseCharts from "@/pages/showcase/ShowcaseCharts";
 import ShowcaseRealtime from "@/pages/showcase/ShowcaseRealtime";
 
+// Auth variations
+import LoginV1 from "@/pages/auth/LoginV1";
+import LoginV2 from "@/pages/auth/LoginV2";
+import LoginV3 from "@/pages/auth/LoginV3";
+import AuthShowcasePage from "@/pages/auth/AuthShowcasePage";
+
 const queryClient = new QueryClient();
 
 function ThemeInitializer({ children }: { children: React.ReactNode }) {
