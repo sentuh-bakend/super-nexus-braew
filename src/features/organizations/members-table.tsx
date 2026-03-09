@@ -135,8 +135,8 @@ export function MembersTableUI() {
                     variant={member.status === "online" ? "default" : "outline"}
                     className={cn(
                       "text-[10px] capitalize",
-                      member.status === "online" && "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20",
-                      member.status === "away" && "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20"
+                      member.status === "online" && "bg-success/10 text-success border-success/20",
+                      member.status === "away" && "bg-warning/10 text-warning border-warning/20"
                     )}
                   >
                     {member.status}

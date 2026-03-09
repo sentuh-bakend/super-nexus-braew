@@ -37,7 +37,7 @@ export function UploadQueue() {
             <Badge variant="outline">{queued} queued</Badge>
           )}
           {completed > 0 && (
-            <Badge className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20">
+            <Badge className="bg-success/10 text-success border-success/20">
               {completed} done
             </Badge>
           )}
