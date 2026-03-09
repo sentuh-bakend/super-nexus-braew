@@ -56,6 +56,12 @@ import LoginV3 from "@/pages/auth/LoginV3";
 import RegisterV1 from "@/pages/auth/RegisterV1";
 import RegisterV2 from "@/pages/auth/RegisterV2";
 import RegisterV3 from "@/pages/auth/RegisterV3";
+import ForgotPasswordV1 from "@/pages/auth/ForgotPasswordV1";
+import ForgotPasswordV2 from "@/pages/auth/ForgotPasswordV2";
+import ForgotPasswordV3 from "@/pages/auth/ForgotPasswordV3";
+import ResetPasswordV1 from "@/pages/auth/ResetPasswordV1";
+import ResetPasswordV2 from "@/pages/auth/ResetPasswordV2";
+import ResetPasswordV3 from "@/pages/auth/ResetPasswordV3";
 import AuthShowcasePage from "@/pages/auth/AuthShowcasePage";
 
 const queryClient = new QueryClient();
@@ -91,6 +97,12 @@ const App = () => (
               <Route path="/auth/register-v1" element={<RegisterV1 />} />
               <Route path="/auth/register-v2" element={<RegisterV2 />} />
               <Route path="/auth/register-v3" element={<RegisterV3 />} />
+              <Route path="/auth/forgot-password-v1" element={<ForgotPasswordV1 />} />
+              <Route path="/auth/forgot-password-v2" element={<ForgotPasswordV2 />} />
+              <Route path="/auth/forgot-password-v3" element={<ForgotPasswordV3 />} />
+              <Route path="/auth/reset-password-v1" element={<ResetPasswordV1 />} />
+              <Route path="/auth/reset-password-v2" element={<ResetPasswordV2 />} />
+              <Route path="/auth/reset-password-v3" element={<ResetPasswordV3 />} />
 
               {/* App pages (with layout) */}
               <Route element={<AuthGuard><AppLayout /></AuthGuard>}>
