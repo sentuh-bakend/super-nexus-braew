@@ -53,6 +53,9 @@ import ShowcaseRealtime from "@/pages/showcase/ShowcaseRealtime";
 import LoginV1 from "@/pages/auth/LoginV1";
 import LoginV2 from "@/pages/auth/LoginV2";
 import LoginV3 from "@/pages/auth/LoginV3";
+import RegisterV1 from "@/pages/auth/RegisterV1";
+import RegisterV2 from "@/pages/auth/RegisterV2";
+import RegisterV3 from "@/pages/auth/RegisterV3";
 import AuthShowcasePage from "@/pages/auth/AuthShowcasePage";
 
 const queryClient = new QueryClient();
@@ -85,6 +88,9 @@ const App = () => (
               <Route path="/auth/login-v1" element={<LoginV1 />} />
               <Route path="/auth/login-v2" element={<LoginV2 />} />
               <Route path="/auth/login-v3" element={<LoginV3 />} />
+              <Route path="/auth/register-v1" element={<RegisterV1 />} />
+              <Route path="/auth/register-v2" element={<RegisterV2 />} />
+              <Route path="/auth/register-v3" element={<RegisterV3 />} />
 
               {/* App pages (with layout) */}
               <Route element={<AuthGuard><AppLayout /></AuthGuard>}>
