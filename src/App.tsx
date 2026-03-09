@@ -82,6 +82,9 @@ const App = () => (
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/forgot-password" element={<ForgotPasswordPage />} />
               <Route path="/reset-password" element={<ResetPasswordPage />} />
+              <Route path="/auth/login-v1" element={<LoginV1 />} />
+              <Route path="/auth/login-v2" element={<LoginV2 />} />
+              <Route path="/auth/login-v3" element={<LoginV3 />} />
 
               {/* App pages (with layout) */}
               <Route element={<AuthGuard><AppLayout /></AuthGuard>}>
