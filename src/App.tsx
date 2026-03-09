@@ -97,6 +97,12 @@ const App = () => (
               <Route path="/auth/register-v1" element={<RegisterV1 />} />
               <Route path="/auth/register-v2" element={<RegisterV2 />} />
               <Route path="/auth/register-v3" element={<RegisterV3 />} />
+              <Route path="/auth/forgot-password-v1" element={<ForgotPasswordV1 />} />
+              <Route path="/auth/forgot-password-v2" element={<ForgotPasswordV2 />} />
+              <Route path="/auth/forgot-password-v3" element={<ForgotPasswordV3 />} />
+              <Route path="/auth/reset-password-v1" element={<ResetPasswordV1 />} />
+              <Route path="/auth/reset-password-v2" element={<ResetPasswordV2 />} />
+              <Route path="/auth/reset-password-v3" element={<ResetPasswordV3 />} />
 
               {/* App pages (with layout) */}
               <Route element={<AuthGuard><AppLayout /></AuthGuard>}>
