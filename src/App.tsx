@@ -56,6 +56,12 @@ import LoginV3 from "@/pages/auth/LoginV3";
 import RegisterV1 from "@/pages/auth/RegisterV1";
 import RegisterV2 from "@/pages/auth/RegisterV2";
 import RegisterV3 from "@/pages/auth/RegisterV3";
+import ForgotPasswordV1 from "@/pages/auth/ForgotPasswordV1";
+import ForgotPasswordV2 from "@/pages/auth/ForgotPasswordV2";
+import ForgotPasswordV3 from "@/pages/auth/ForgotPasswordV3";
+import ResetPasswordV1 from "@/pages/auth/ResetPasswordV1";
+import ResetPasswordV2 from "@/pages/auth/ResetPasswordV2";
+import ResetPasswordV3 from "@/pages/auth/ResetPasswordV3";
 import AuthShowcasePage from "@/pages/auth/AuthShowcasePage";
 
 const queryClient = new QueryClient();
