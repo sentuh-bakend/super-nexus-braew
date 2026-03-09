@@ -35,8 +35,8 @@ const mockMembers: Member[] = [
 ];
 
 const statusColors: Record<string, string> = {
-  online: "bg-emerald-500",
-  away: "bg-amber-500",
+  online: "bg-success",
+  away: "bg-warning",
   offline: "bg-muted-foreground/40",
 };
 
