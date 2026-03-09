@@ -53,6 +53,9 @@ import ShowcaseRealtime from "@/pages/showcase/ShowcaseRealtime";
 import LoginV1 from "@/pages/auth/LoginV1";
 import LoginV2 from "@/pages/auth/LoginV2";
 import LoginV3 from "@/pages/auth/LoginV3";
+import RegisterV1 from "@/pages/auth/RegisterV1";
+import RegisterV2 from "@/pages/auth/RegisterV2";
+import RegisterV3 from "@/pages/auth/RegisterV3";
 import AuthShowcasePage from "@/pages/auth/AuthShowcasePage";
 
 const queryClient = new QueryClient();
