@@ -24,8 +24,8 @@ function formatFileSize(bytes: number): string {
 const statusConfig = {
   queued: { icon: Clock, label: "Queued", color: "text-muted-foreground" },
   uploading: { icon: Loader2, label: "Uploading", color: "text-primary" },
-  paused: { icon: Pause, label: "Paused", color: "text-amber-500" },
-  complete: { icon: CheckCircle2, label: "Complete", color: "text-emerald-500" },
+  paused: { icon: Pause, label: "Paused", color: "text-warning" },
+  complete: { icon: CheckCircle2, label: "Complete", color: "text-success" },
   error: { icon: AlertCircle, label: "Error", color: "text-destructive" },
 };
 
