@@ -122,10 +122,10 @@ export function AccessRightManager({ initialRights }: AccessRightManagerProps) {
                   {selected.endpoints.map((ep) => {
                     const method = ep.split(" ")[0];
                     const methodColor: Record<string, string> = {
-                      GET: "text-emerald-600 dark:text-emerald-400",
-                      POST: "text-blue-600 dark:text-blue-400",
-                      PUT: "text-amber-600 dark:text-amber-400",
-                      DELETE: "text-red-600 dark:text-red-400",
+                      GET: "text-success",
+                      POST: "text-info",
+                      PUT: "text-warning",
+                      DELETE: "text-danger",
                     };
                     return (
                       <div key={ep} className="flex items-center justify-between px-3 py-2 rounded-md bg-muted/30 group">
