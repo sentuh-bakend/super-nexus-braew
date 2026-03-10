@@ -64,6 +64,21 @@ import ResetPasswordV2 from "@/pages/auth/ResetPasswordV2";
 import ResetPasswordV3 from "@/pages/auth/ResetPasswordV3";
 import AuthShowcasePage from "@/pages/auth/AuthShowcasePage";
 
+// Error pages
+import Error401V1 from "@/pages/errors/Error401V1";
+import Error401V2 from "@/pages/errors/Error401V2";
+import Error401V3 from "@/pages/errors/Error401V3";
+import Error403V1 from "@/pages/errors/Error403V1";
+import Error403V2 from "@/pages/errors/Error403V2";
+import Error403V3 from "@/pages/errors/Error403V3";
+import Error404V1 from "@/pages/errors/Error404V1";
+import Error404V2 from "@/pages/errors/Error404V2";
+import Error404V3 from "@/pages/errors/Error404V3";
+import Error500V1 from "@/pages/errors/Error500V1";
+import Error500V2 from "@/pages/errors/Error500V2";
+import Error500V3 from "@/pages/errors/Error500V3";
+import ErrorShowcasePage from "@/pages/errors/ErrorShowcasePage";
+
 const queryClient = new QueryClient();
 
 function ThemeInitializer({ children }: { children: React.ReactNode }) {
@@ -104,7 +119,19 @@ const App = () => (
               <Route path="/auth/reset-password-v2" element={<ResetPasswordV2 />} />
               <Route path="/auth/reset-password-v3" element={<ResetPasswordV3 />} />
 
-              {/* App pages (with layout) */}
+              {/* Error pages (no layout) */}
+              <Route path="/errors/401-v1" element={<Error401V1 />} />
+              <Route path="/errors/401-v2" element={<Error401V2 />} />
+              <Route path="/errors/401-v3" element={<Error401V3 />} />
+              <Route path="/errors/403-v1" element={<Error403V1 />} />
+              <Route path="/errors/403-v2" element={<Error403V2 />} />
+              <Route path="/errors/403-v3" element={<Error403V3 />} />
+              <Route path="/errors/404-v1" element={<Error404V1 />} />
+              <Route path="/errors/404-v2" element={<Error404V2 />} />
+              <Route path="/errors/404-v3" element={<Error404V3 />} />
+              <Route path="/errors/500-v1" element={<Error500V1 />} />
+              <Route path="/errors/500-v2" element={<Error500V2 />} />
+              <Route path="/errors/500-v3" element={<Error500V3 />} />
               <Route element={<AuthGuard><AppLayout /></AuthGuard>}>
                 <Route path="/" element={<DashboardPage />} />
                 <Route path="/users" element={<UsersPage />} />
@@ -135,6 +162,7 @@ const App = () => (
                 <Route path="/components/charts" element={<ShowcaseCharts />} />
                 <Route path="/components/realtime" element={<ShowcaseRealtime />} />
                 <Route path="/auth-showcase" element={<AuthShowcasePage />} />
+                <Route path="/error-showcase" element={<ErrorShowcasePage />} />
               </Route>
 
               <Route path="*" element={<NotFound />} />
