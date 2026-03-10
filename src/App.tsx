@@ -64,6 +64,21 @@ import ResetPasswordV2 from "@/pages/auth/ResetPasswordV2";
 import ResetPasswordV3 from "@/pages/auth/ResetPasswordV3";
 import AuthShowcasePage from "@/pages/auth/AuthShowcasePage";
 
+// Error pages
+import Error401V1 from "@/pages/errors/Error401V1";
+import Error401V2 from "@/pages/errors/Error401V2";
+import Error401V3 from "@/pages/errors/Error401V3";
+import Error403V1 from "@/pages/errors/Error403V1";
+import Error403V2 from "@/pages/errors/Error403V2";
+import Error403V3 from "@/pages/errors/Error403V3";
+import Error404V1 from "@/pages/errors/Error404V1";
+import Error404V2 from "@/pages/errors/Error404V2";
+import Error404V3 from "@/pages/errors/Error404V3";
+import Error500V1 from "@/pages/errors/Error500V1";
+import Error500V2 from "@/pages/errors/Error500V2";
+import Error500V3 from "@/pages/errors/Error500V3";
+import ErrorShowcasePage from "@/pages/errors/ErrorShowcasePage";
+
 const queryClient = new QueryClient();
 
 function ThemeInitializer({ children }: { children: React.ReactNode }) {
