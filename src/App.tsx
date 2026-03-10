@@ -119,7 +119,19 @@ const App = () => (
               <Route path="/auth/reset-password-v2" element={<ResetPasswordV2 />} />
               <Route path="/auth/reset-password-v3" element={<ResetPasswordV3 />} />
 
-              {/* App pages (with layout) */}
+              {/* Error pages (no layout) */}
+              <Route path="/errors/401-v1" element={<Error401V1 />} />
+              <Route path="/errors/401-v2" element={<Error401V2 />} />
+              <Route path="/errors/401-v3" element={<Error401V3 />} />
+              <Route path="/errors/403-v1" element={<Error403V1 />} />
+              <Route path="/errors/403-v2" element={<Error403V2 />} />
+              <Route path="/errors/403-v3" element={<Error403V3 />} />
+              <Route path="/errors/404-v1" element={<Error404V1 />} />
+              <Route path="/errors/404-v2" element={<Error404V2 />} />
+              <Route path="/errors/404-v3" element={<Error404V3 />} />
+              <Route path="/errors/500-v1" element={<Error500V1 />} />
+              <Route path="/errors/500-v2" element={<Error500V2 />} />
+              <Route path="/errors/500-v3" element={<Error500V3 />} />
               <Route element={<AuthGuard><AppLayout /></AuthGuard>}>
                 <Route path="/" element={<DashboardPage />} />
                 <Route path="/users" element={<UsersPage />} />
