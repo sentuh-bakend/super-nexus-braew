@@ -162,6 +162,7 @@ const App = () => (
                 <Route path="/components/charts" element={<ShowcaseCharts />} />
                 <Route path="/components/realtime" element={<ShowcaseRealtime />} />
                 <Route path="/auth-showcase" element={<AuthShowcasePage />} />
+                <Route path="/error-showcase" element={<ErrorShowcasePage />} />
               </Route>
 
               <Route path="*" element={<NotFound />} />
