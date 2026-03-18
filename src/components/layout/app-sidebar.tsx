@@ -5,7 +5,7 @@ import {
   LayoutDashboard, Users, Shield, Building2, FolderKanban, Settings,
   ChevronLeft, ChevronRight, Hexagon, Palette, Component, KeyRound, Lock,
   ChevronDown, FileText, UserCheck, ShieldCheck, Upload, HeartPulse, BarChart3,
-  Box, Globe, LogIn, UserPlus, KeySquare,
+  Box, Globe, LogIn, UserPlus, KeySquare, AlertTriangle,
 } from "lucide-react";
 import { useState } from "react";
 import { OrganizationSwitcher } from "@/features/organizations/organization-switcher";
