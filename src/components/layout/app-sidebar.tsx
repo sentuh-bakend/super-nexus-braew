@@ -5,7 +5,7 @@ import {
   LayoutDashboard, Users, Shield, Building2, FolderKanban, Settings,
   ChevronLeft, ChevronRight, Hexagon, Palette, Component, KeyRound, Lock,
   ChevronDown, FileText, UserCheck, ShieldCheck, Upload, HeartPulse, BarChart3,
-  Box, Globe, LogIn, UserPlus, KeySquare,
+  Box, Globe, LogIn, UserPlus, KeySquare, AlertTriangle,
 } from "lucide-react";
 import { useState } from "react";
 import { OrganizationSwitcher } from "@/features/organizations/organization-switcher";
@@ -71,12 +71,22 @@ const navSections: NavSection[] = [
     ],
   },
   {
-    label: "Auth Pages",
+    label: "Showcase",
     items: [
-      { label: "Auth Showcase", path: "/auth-showcase", icon: Palette },
+      { label: "Auth Showcase", path: "/auth-showcase", icon: LogIn },
+      { label: "Error Showcase", path: "/error-showcase", icon: AlertTriangle },
       { label: "Login V1", path: "/auth/login-v1", icon: LogIn },
       { label: "Login V2", path: "/auth/login-v2", icon: LogIn },
       { label: "Login V3", path: "/auth/login-v3", icon: LogIn },
+      { label: "Register V1", path: "/auth/register-v1", icon: UserPlus },
+      { label: "Register V2", path: "/auth/register-v2", icon: UserPlus },
+      { label: "Register V3", path: "/auth/register-v3", icon: UserPlus },
+      { label: "Forgot V1", path: "/auth/forgot-password-v1", icon: KeySquare },
+      { label: "Forgot V2", path: "/auth/forgot-password-v2", icon: KeySquare },
+      { label: "Forgot V3", path: "/auth/forgot-password-v3", icon: KeySquare },
+      { label: "Reset V1", path: "/auth/reset-password-v1", icon: KeyRound },
+      { label: "Reset V2", path: "/auth/reset-password-v2", icon: KeyRound },
+      { label: "Reset V3", path: "/auth/reset-password-v3", icon: KeyRound },
       { label: "Login", path: "/login", icon: LogIn },
       { label: "Register", path: "/register", icon: UserPlus },
       { label: "Forgot Password", path: "/forgot-password", icon: KeySquare },
