@@ -143,7 +143,9 @@ function SidebarSection({
   collapsed: boolean;
   currentPath: string;
 }) {
-  const hasActiveChild = section.items.some((i) => i.path === currentPath);
+  const hasActiveChild =
+    section.items.some((i) => i.path === currentPath) ||
+    (section.subSections?.some((s) => s.items.some((i) => i.path === currentPath)) ?? false);
   const [open, setOpen] = useState(section.defaultOpen ?? hasActiveChild);
 
   if (collapsed) {
@@ -206,6 +208,70 @@ function SidebarSection({
                 )}
               >
                 <item.icon className="h-4.5 w-4.5 shrink-0" />
+                <span className="truncate">{item.label}</span>
+              </Link>
+            );
+          })}
+          {section.subSections?.map((sub) => (
+            <SidebarSubSection
+              key={sub.label}
+              subSection={sub}
+              currentPath={currentPath}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function SidebarSubSection({
+  subSection,
+  currentPath,
+}: {
+  subSection: NavSubSection;
+  currentPath: string;
+}) {
+  const hasActiveChild = subSection.items.some((i) => i.path === currentPath);
+  const [open, setOpen] = useState(hasActiveChild);
+  const Icon = subSection.icon;
+
+  return (
+    <div className="pt-1">
+      <button
+        onClick={() => setOpen(!open)}
+        className={cn(
+          "flex items-center gap-3 w-full px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150",
+          hasActiveChild
+            ? "text-sidebar-foreground"
+            : "text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-foreground"
+        )}
+      >
+        <Icon className="h-4.5 w-4.5 shrink-0" />
+        <span className="flex-1 text-left truncate">{subSection.label}</span>
+        <ChevronDown
+          className={cn(
+            "h-3.5 w-3.5 transition-transform duration-200 shrink-0",
+            open && "rotate-180"
+          )}
+        />
+      </button>
+      {open && (
+        <div className="mt-0.5 ml-3 pl-3 border-l border-sidebar-border space-y-0.5">
+          {subSection.items.map((item) => {
+            const isActive = currentPath === item.path;
+            return (
+              <Link
+                key={item.path + item.label}
+                to={item.path}
+                className={cn(
+                  "flex items-center gap-3 px-3 py-1.5 rounded-md text-sm font-medium transition-colors duration-150",
+                  isActive
+                    ? "bg-primary/10 text-primary"
+                    : "text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-foreground"
+                )}
+              >
+                <item.icon className="h-4 w-4 shrink-0" />
                 <span className="truncate">{item.label}</span>
               </Link>
             );
