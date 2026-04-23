@@ -12,6 +12,7 @@ import { ErrorBoundary } from "@/components/ui/error-boundary";
 
 // Pages
 import DashboardPage from "@/pages/DashboardPage";
+import LandingPage from "@/pages/LandingPage";
 import SettingsPage from "@/pages/SettingsPage";
 import LoginPage from "@/pages/LoginPage";
 import RegisterPage from "@/pages/RegisterPage";
@@ -101,6 +102,9 @@ const App = () => (
           <Sonner />
           <BrowserRouter>
             <Routes>
+              {/* Public landing */}
+              <Route path="/" element={<LandingPage />} />
+
               {/* Auth pages (no layout) */}
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
@@ -133,7 +137,7 @@ const App = () => (
               <Route path="/errors/500-v2" element={<Error500V2 />} />
               <Route path="/errors/500-v3" element={<Error500V3 />} />
               <Route element={<AuthGuard><AppLayout /></AuthGuard>}>
-                <Route path="/" element={<DashboardPage />} />
+                <Route path="/dashboard" element={<DashboardPage />} />
                 <Route path="/users" element={<UsersPage />} />
                 <Route path="/roles" element={<RolesPage />} />
                 <Route path="/organizations" element={<OrganizationsPage />} />
