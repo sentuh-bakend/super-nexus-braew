@@ -13,6 +13,7 @@ import { ErrorBoundary } from "@/components/ui/error-boundary";
 // Pages
 import DashboardPage from "@/pages/DashboardPage";
 import LandingPage from "@/pages/LandingPage";
+import NewsletterConfirmPage from "@/pages/NewsletterConfirmPage";
 import SettingsPage from "@/pages/SettingsPage";
 import LoginPage from "@/pages/LoginPage";
 import RegisterPage from "@/pages/RegisterPage";
@@ -104,6 +105,7 @@ const App = () => (
             <Routes>
               {/* Public landing */}
               <Route path="/" element={<LandingPage />} />
+              <Route path="/newsletter/confirm" element={<NewsletterConfirmPage />} />
 
               {/* Auth pages (no layout) */}
               <Route path="/login" element={<LoginPage />} />

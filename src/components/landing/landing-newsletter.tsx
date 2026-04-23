@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { z } from "zod";
-import { Loader2, Mail, CheckCircle2, AlertCircle, Send } from "lucide-react";
+import { Loader2, Mail, AlertCircle, Send, MailCheck, CheckCircle2 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { subscribeNewsletter } from "@/lib/email/newsletter-service";
 
 const emailSchema = z
   .string()
@@ -12,22 +13,11 @@ const emailSchema = z
 
 type Status = "idle" | "loading" | "success" | "error";
 
-/**
- * Simulated API call. Replace with real endpoint when backend is wired up.
- * Resolves after ~1.2s. Rejects emails containing "fail" so error state is testable.
- */
-async function subscribeToNewsletter(email: string): Promise<{ ok: true }> {
-  await new Promise((r) => setTimeout(r, 1200));
-  if (email.toLowerCase().includes("fail")) {
-    throw new Error("This email could not be subscribed. Try another.");
-  }
-  return { ok: true };
-}
-
 export function LandingNewsletter() {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<Status>("idle");
   const [message, setMessage] = useState<string>("");
+  const [submittedEmail, setSubmittedEmail] = useState<string>("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,9 +33,9 @@ export function LandingNewsletter() {
     setStatus("loading");
     setMessage("");
     try {
-      await subscribeToNewsletter(parsed.data);
+      await subscribeNewsletter(parsed.data);
       setStatus("success");
-      setMessage("You're in! Check your inbox to confirm.");
+      setSubmittedEmail(parsed.data);
       setEmail("");
     } catch (err) {
       setStatus("error");
@@ -56,6 +46,54 @@ export function LandingNewsletter() {
   const isLoading = status === "loading";
   const isSuccess = status === "success";
   const isError = status === "error";
+
+  // Success state — full panel takeover with "Check your inbox" message
+  if (isSuccess) {
+    return (
+      <section className="border-y border-border bg-surface/50">
+        <div className="mx-auto max-w-7xl px-6 py-16 md:py-20">
+          <div className="relative overflow-hidden rounded-2xl border border-success/30 bg-card p-8 md:p-12">
+            <div className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-success/10 blur-3xl" />
+            <div className="pointer-events-none absolute -bottom-16 -left-16 h-64 w-64 rounded-full bg-primary/10 blur-3xl" />
+
+            <div className="relative mx-auto max-w-xl text-center">
+              <div className="mx-auto mb-5 inline-flex h-14 w-14 items-center justify-center rounded-full bg-success/10 text-success">
+                <MailCheck className="h-7 w-7" />
+              </div>
+              <h3 className="mb-3 text-2xl font-bold tracking-tight text-foreground md:text-3xl">
+                Check your inbox
+              </h3>
+              <p className="mb-2 text-sm text-muted-foreground md:text-base">
+                We sent a confirmation link to{" "}
+                <span className="font-medium text-foreground">{submittedEmail}</span>.
+              </p>
+              <p className="text-sm text-muted-foreground">
+                Click the link in the email to activate your subscription. The link
+                expires in 24 hours.
+              </p>
+
+              <div className="mt-6 flex flex-col items-center justify-center gap-2 sm:flex-row">
+                <button
+                  onClick={() => {
+                    setStatus("idle");
+                    setSubmittedEmail("");
+                    setMessage("");
+                  }}
+                  className="text-sm font-medium text-primary hover:underline"
+                >
+                  Use a different email
+                </button>
+              </div>
+
+              <p className="mt-6 text-xs text-muted-foreground">
+                Didn't get it? Check your spam folder, or wait a minute and try again.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="border-y border-border bg-surface/50">
@@ -146,13 +184,7 @@ export function LandingNewsletter() {
                       {message}
                     </span>
                   )}
-                  {isSuccess && (
-                    <span className="inline-flex items-center gap-1.5 text-success">
-                      <CheckCircle2 className="h-3.5 w-3.5" />
-                      {message}
-                    </span>
-                  )}
-                  {!isError && !isSuccess && (
+                  {!isError && (
                     <span className="text-muted-foreground">
                       We'll only email you about NexusOS — promise.
                     </span>
