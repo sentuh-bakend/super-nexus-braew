@@ -25,6 +25,13 @@ interface NavSection {
   label: string;
   items: NavItem[];
   defaultOpen?: boolean;
+  subSections?: NavSubSection[];
+}
+
+interface NavSubSection {
+  label: string;
+  icon: React.ElementType;
+  items: NavItem[];
 }
 
 const navSections: NavSection[] = [
@@ -75,22 +82,54 @@ const navSections: NavSection[] = [
     items: [
       { label: "Auth Showcase", path: "/auth-showcase", icon: LogIn },
       { label: "Error Showcase", path: "/error-showcase", icon: AlertTriangle },
-      { label: "Login V1", path: "/auth/login-v1", icon: LogIn },
-      { label: "Login V2", path: "/auth/login-v2", icon: LogIn },
-      { label: "Login V3", path: "/auth/login-v3", icon: LogIn },
-      { label: "Register V1", path: "/auth/register-v1", icon: UserPlus },
-      { label: "Register V2", path: "/auth/register-v2", icon: UserPlus },
-      { label: "Register V3", path: "/auth/register-v3", icon: UserPlus },
-      { label: "Forgot V1", path: "/auth/forgot-password-v1", icon: KeySquare },
-      { label: "Forgot V2", path: "/auth/forgot-password-v2", icon: KeySquare },
-      { label: "Forgot V3", path: "/auth/forgot-password-v3", icon: KeySquare },
-      { label: "Reset V1", path: "/auth/reset-password-v1", icon: KeyRound },
-      { label: "Reset V2", path: "/auth/reset-password-v2", icon: KeyRound },
-      { label: "Reset V3", path: "/auth/reset-password-v3", icon: KeyRound },
-      { label: "Login", path: "/login", icon: LogIn },
-      { label: "Register", path: "/register", icon: UserPlus },
-      { label: "Forgot Password", path: "/forgot-password", icon: KeySquare },
-      { label: "Reset Password", path: "/reset-password", icon: KeyRound },
+    ],
+    subSections: [
+      {
+        label: "Auth Variations",
+        icon: LogIn,
+        items: [
+          { label: "Login V1", path: "/auth/login-v1", icon: LogIn },
+          { label: "Login V2", path: "/auth/login-v2", icon: LogIn },
+          { label: "Login V3", path: "/auth/login-v3", icon: LogIn },
+          { label: "Register V1", path: "/auth/register-v1", icon: UserPlus },
+          { label: "Register V2", path: "/auth/register-v2", icon: UserPlus },
+          { label: "Register V3", path: "/auth/register-v3", icon: UserPlus },
+          { label: "Forgot V1", path: "/auth/forgot-password-v1", icon: KeySquare },
+          { label: "Forgot V2", path: "/auth/forgot-password-v2", icon: KeySquare },
+          { label: "Forgot V3", path: "/auth/forgot-password-v3", icon: KeySquare },
+          { label: "Reset V1", path: "/auth/reset-password-v1", icon: KeyRound },
+          { label: "Reset V2", path: "/auth/reset-password-v2", icon: KeyRound },
+          { label: "Reset V3", path: "/auth/reset-password-v3", icon: KeyRound },
+        ],
+      },
+      {
+        label: "Error Pages",
+        icon: AlertTriangle,
+        items: [
+          { label: "401 V1", path: "/errors/401-v1", icon: AlertTriangle },
+          { label: "401 V2", path: "/errors/401-v2", icon: AlertTriangle },
+          { label: "401 V3", path: "/errors/401-v3", icon: AlertTriangle },
+          { label: "403 V1", path: "/errors/403-v1", icon: AlertTriangle },
+          { label: "403 V2", path: "/errors/403-v2", icon: AlertTriangle },
+          { label: "403 V3", path: "/errors/403-v3", icon: AlertTriangle },
+          { label: "404 V1", path: "/errors/404-v1", icon: AlertTriangle },
+          { label: "404 V2", path: "/errors/404-v2", icon: AlertTriangle },
+          { label: "404 V3", path: "/errors/404-v3", icon: AlertTriangle },
+          { label: "500 V1", path: "/errors/500-v1", icon: AlertTriangle },
+          { label: "500 V2", path: "/errors/500-v2", icon: AlertTriangle },
+          { label: "500 V3", path: "/errors/500-v3", icon: AlertTriangle },
+        ],
+      },
+      {
+        label: "Auth Standard",
+        icon: LogIn,
+        items: [
+          { label: "Login", path: "/login", icon: LogIn },
+          { label: "Register", path: "/register", icon: UserPlus },
+          { label: "Forgot Password", path: "/forgot-password", icon: KeySquare },
+          { label: "Reset Password", path: "/reset-password", icon: KeyRound },
+        ],
+      },
     ],
   },
 ];
@@ -104,7 +143,9 @@ function SidebarSection({
   collapsed: boolean;
   currentPath: string;
 }) {
-  const hasActiveChild = section.items.some((i) => i.path === currentPath);
+  const hasActiveChild =
+    section.items.some((i) => i.path === currentPath) ||
+    (section.subSections?.some((s) => s.items.some((i) => i.path === currentPath)) ?? false);
   const [open, setOpen] = useState(section.defaultOpen ?? hasActiveChild);
 
   if (collapsed) {
@@ -167,6 +208,70 @@ function SidebarSection({
                 )}
               >
                 <item.icon className="h-4.5 w-4.5 shrink-0" />
+                <span className="truncate">{item.label}</span>
+              </Link>
+            );
+          })}
+          {section.subSections?.map((sub) => (
+            <SidebarSubSection
+              key={sub.label}
+              subSection={sub}
+              currentPath={currentPath}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function SidebarSubSection({
+  subSection,
+  currentPath,
+}: {
+  subSection: NavSubSection;
+  currentPath: string;
+}) {
+  const hasActiveChild = subSection.items.some((i) => i.path === currentPath);
+  const [open, setOpen] = useState(hasActiveChild);
+  const Icon = subSection.icon;
+
+  return (
+    <div className="pt-1">
+      <button
+        onClick={() => setOpen(!open)}
+        className={cn(
+          "flex items-center gap-3 w-full px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150",
+          hasActiveChild
+            ? "text-sidebar-foreground"
+            : "text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-foreground"
+        )}
+      >
+        <Icon className="h-4.5 w-4.5 shrink-0" />
+        <span className="flex-1 text-left truncate">{subSection.label}</span>
+        <ChevronDown
+          className={cn(
+            "h-3.5 w-3.5 transition-transform duration-200 shrink-0",
+            open && "rotate-180"
+          )}
+        />
+      </button>
+      {open && (
+        <div className="mt-0.5 ml-3 pl-3 border-l border-sidebar-border space-y-0.5">
+          {subSection.items.map((item) => {
+            const isActive = currentPath === item.path;
+            return (
+              <Link
+                key={item.path + item.label}
+                to={item.path}
+                className={cn(
+                  "flex items-center gap-3 px-3 py-1.5 rounded-md text-sm font-medium transition-colors duration-150",
+                  isActive
+                    ? "bg-primary/10 text-primary"
+                    : "text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-foreground"
+                )}
+              >
+                <item.icon className="h-4 w-4 shrink-0" />
                 <span className="truncate">{item.label}</span>
               </Link>
             );
