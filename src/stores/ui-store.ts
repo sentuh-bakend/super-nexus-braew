@@ -9,10 +9,12 @@ interface UIState {
   sidebarCollapsed: boolean;
   theme: ThemeMode;
   density: DensityMode;
+  sidebarSectionOpen: Record<string, boolean>;
   toggleSidebar: () => void;
   toggleSidebarCollapse: () => void;
   setTheme: (theme: ThemeMode) => void;
   setDensity: (density: DensityMode) => void;
+  setSidebarSectionOpen: (key: string, open: boolean) => void;
 }
 
 export const useUIStore = create<UIState>()(
@@ -22,6 +24,7 @@ export const useUIStore = create<UIState>()(
       sidebarCollapsed: false,
       theme: 'light',
       density: 'comfort',
+      sidebarSectionOpen: {},
       toggleSidebar: () => set({ sidebarOpen: !get().sidebarOpen }),
       toggleSidebarCollapse: () => set({ sidebarCollapsed: !get().sidebarCollapsed }),
       setTheme: (theme) => {
@@ -32,6 +35,8 @@ export const useUIStore = create<UIState>()(
         document.documentElement.classList.toggle('density-compact', density === 'compact');
         set({ density });
       },
+      setSidebarSectionOpen: (key, open) =>
+        set({ sidebarSectionOpen: { ...get().sidebarSectionOpen, [key]: open } }),
     }),
     { name: 'nexus-ui' }
   )
