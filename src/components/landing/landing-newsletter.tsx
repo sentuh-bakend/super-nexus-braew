@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { z } from "zod";
-import { Loader2, Mail, CheckCircle2, AlertCircle, Send, MailCheck } from "lucide-react";
+import { Loader2, Mail, AlertCircle, Send, MailCheck } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { subscribeNewsletter } from "@/lib/email/newsletter-service";
 
