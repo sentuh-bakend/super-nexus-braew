@@ -38,7 +38,7 @@ const navSections: NavSection[] = [
     label: "Dashboard",
     defaultOpen: true,
     items: [
-      { label: "Overview", path: "/", icon: LayoutDashboard },
+      { label: "Overview", path: "/dashboard", icon: LayoutDashboard },
     ],
   },
   {
