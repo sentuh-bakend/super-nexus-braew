@@ -25,6 +25,13 @@ interface NavSection {
   label: string;
   items: NavItem[];
   defaultOpen?: boolean;
+  subSections?: NavSubSection[];
+}
+
+interface NavSubSection {
+  label: string;
+  icon: React.ElementType;
+  items: NavItem[];
 }
 
 const navSections: NavSection[] = [
@@ -75,22 +82,54 @@ const navSections: NavSection[] = [
     items: [
       { label: "Auth Showcase", path: "/auth-showcase", icon: LogIn },
       { label: "Error Showcase", path: "/error-showcase", icon: AlertTriangle },
-      { label: "Login V1", path: "/auth/login-v1", icon: LogIn },
-      { label: "Login V2", path: "/auth/login-v2", icon: LogIn },
-      { label: "Login V3", path: "/auth/login-v3", icon: LogIn },
-      { label: "Register V1", path: "/auth/register-v1", icon: UserPlus },
-      { label: "Register V2", path: "/auth/register-v2", icon: UserPlus },
-      { label: "Register V3", path: "/auth/register-v3", icon: UserPlus },
-      { label: "Forgot V1", path: "/auth/forgot-password-v1", icon: KeySquare },
-      { label: "Forgot V2", path: "/auth/forgot-password-v2", icon: KeySquare },
-      { label: "Forgot V3", path: "/auth/forgot-password-v3", icon: KeySquare },
-      { label: "Reset V1", path: "/auth/reset-password-v1", icon: KeyRound },
-      { label: "Reset V2", path: "/auth/reset-password-v2", icon: KeyRound },
-      { label: "Reset V3", path: "/auth/reset-password-v3", icon: KeyRound },
-      { label: "Login", path: "/login", icon: LogIn },
-      { label: "Register", path: "/register", icon: UserPlus },
-      { label: "Forgot Password", path: "/forgot-password", icon: KeySquare },
-      { label: "Reset Password", path: "/reset-password", icon: KeyRound },
+    ],
+    subSections: [
+      {
+        label: "Auth Variations",
+        icon: LogIn,
+        items: [
+          { label: "Login V1", path: "/auth/login-v1", icon: LogIn },
+          { label: "Login V2", path: "/auth/login-v2", icon: LogIn },
+          { label: "Login V3", path: "/auth/login-v3", icon: LogIn },
+          { label: "Register V1", path: "/auth/register-v1", icon: UserPlus },
+          { label: "Register V2", path: "/auth/register-v2", icon: UserPlus },
+          { label: "Register V3", path: "/auth/register-v3", icon: UserPlus },
+          { label: "Forgot V1", path: "/auth/forgot-password-v1", icon: KeySquare },
+          { label: "Forgot V2", path: "/auth/forgot-password-v2", icon: KeySquare },
+          { label: "Forgot V3", path: "/auth/forgot-password-v3", icon: KeySquare },
+          { label: "Reset V1", path: "/auth/reset-password-v1", icon: KeyRound },
+          { label: "Reset V2", path: "/auth/reset-password-v2", icon: KeyRound },
+          { label: "Reset V3", path: "/auth/reset-password-v3", icon: KeyRound },
+        ],
+      },
+      {
+        label: "Error Pages",
+        icon: AlertTriangle,
+        items: [
+          { label: "401 V1", path: "/errors/401-v1", icon: AlertTriangle },
+          { label: "401 V2", path: "/errors/401-v2", icon: AlertTriangle },
+          { label: "401 V3", path: "/errors/401-v3", icon: AlertTriangle },
+          { label: "403 V1", path: "/errors/403-v1", icon: AlertTriangle },
+          { label: "403 V2", path: "/errors/403-v2", icon: AlertTriangle },
+          { label: "403 V3", path: "/errors/403-v3", icon: AlertTriangle },
+          { label: "404 V1", path: "/errors/404-v1", icon: AlertTriangle },
+          { label: "404 V2", path: "/errors/404-v2", icon: AlertTriangle },
+          { label: "404 V3", path: "/errors/404-v3", icon: AlertTriangle },
+          { label: "500 V1", path: "/errors/500-v1", icon: AlertTriangle },
+          { label: "500 V2", path: "/errors/500-v2", icon: AlertTriangle },
+          { label: "500 V3", path: "/errors/500-v3", icon: AlertTriangle },
+        ],
+      },
+      {
+        label: "Auth Standard",
+        icon: LogIn,
+        items: [
+          { label: "Login", path: "/login", icon: LogIn },
+          { label: "Register", path: "/register", icon: UserPlus },
+          { label: "Forgot Password", path: "/forgot-password", icon: KeySquare },
+          { label: "Reset Password", path: "/reset-password", icon: KeyRound },
+        ],
+      },
     ],
   },
 ];
