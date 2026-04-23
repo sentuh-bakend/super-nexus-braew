@@ -231,13 +231,19 @@ function SidebarSection({
 
 function SidebarSubSection({
   subSection,
+  parentLabel,
   currentPath,
 }: {
   subSection: NavSubSection;
+  parentLabel: string;
   currentPath: string;
 }) {
   const hasActiveChild = subSection.items.some((i) => i.path === currentPath);
-  const [open, setOpen] = useState(hasActiveChild);
+  const subKey = `sub:${parentLabel}:${subSection.label}`;
+  const { sidebarSectionOpen, setSidebarSectionOpen } = useUIStore();
+  const stored = sidebarSectionOpen[subKey];
+  const open = stored ?? hasActiveChild;
+  const setOpen = (value: boolean) => setSidebarSectionOpen(subKey, value);
   const Icon = subSection.icon;
 
   return (
