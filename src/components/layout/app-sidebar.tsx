@@ -7,7 +7,6 @@ import {
   ChevronDown, FileText, UserCheck, ShieldCheck, Upload, HeartPulse, BarChart3,
   Box, Globe, LogIn, UserPlus, KeySquare, AlertTriangle,
 } from "lucide-react";
-import { useState } from "react";
 import { OrganizationSwitcher } from "@/features/organizations/organization-switcher";
 import {
   Tooltip,
@@ -146,7 +145,11 @@ function SidebarSection({
   const hasActiveChild =
     section.items.some((i) => i.path === currentPath) ||
     (section.subSections?.some((s) => s.items.some((i) => i.path === currentPath)) ?? false);
-  const [open, setOpen] = useState(section.defaultOpen ?? hasActiveChild);
+  const sectionKey = `section:${section.label}`;
+  const { sidebarSectionOpen, setSidebarSectionOpen } = useUIStore();
+  const stored = sidebarSectionOpen[sectionKey];
+  const open = stored ?? (section.defaultOpen ?? hasActiveChild);
+  const setOpen = (value: boolean) => setSidebarSectionOpen(sectionKey, value);
 
   if (collapsed) {
     return (
@@ -216,6 +219,7 @@ function SidebarSection({
             <SidebarSubSection
               key={sub.label}
               subSection={sub}
+              parentLabel={section.label}
               currentPath={currentPath}
             />
           ))}
@@ -227,13 +231,19 @@ function SidebarSection({
 
 function SidebarSubSection({
   subSection,
+  parentLabel,
   currentPath,
 }: {
   subSection: NavSubSection;
+  parentLabel: string;
   currentPath: string;
 }) {
   const hasActiveChild = subSection.items.some((i) => i.path === currentPath);
-  const [open, setOpen] = useState(hasActiveChild);
+  const subKey = `sub:${parentLabel}:${subSection.label}`;
+  const { sidebarSectionOpen, setSidebarSectionOpen } = useUIStore();
+  const stored = sidebarSectionOpen[subKey];
+  const open = stored ?? hasActiveChild;
+  const setOpen = (value: boolean) => setSidebarSectionOpen(subKey, value);
   const Icon = subSection.icon;
 
   return (
