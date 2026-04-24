@@ -1,11 +1,36 @@
 import { useMemo } from "react";
-import { ChevronDown, ChevronUp, UploadCloud, X } from "lucide-react";
+import {
+  ChevronDown,
+  ChevronUp,
+  UploadCloud,
+  X,
+  RotateCcw,
+  Ban,
+  Trash2,
+} from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { NexusButton } from "@/components/ui/nexus-button";
 import { NexusCard } from "@/components/ui/nexus-card";
 import { useUploadStore } from "@/lib/upload/upload-store";
 import { UploadProgress } from "./upload-progress";
+
+function formatBytesPerSecond(bps: number) {
+  if (bps <= 0) return "";
+  if (bps < 1024) return `${Math.round(bps)} B/s`;
+  if (bps < 1024 * 1024) return `${(bps / 1024).toFixed(1)} KB/s`;
+  return `${(bps / 1024 / 1024).toFixed(1)} MB/s`;
+}
+
+function formatEta(seconds?: number) {
+  if (seconds == null || !isFinite(seconds)) return "";
+  if (seconds < 60) return `${seconds}s left`;
+  const m = Math.floor(seconds / 60);
+  const s = seconds % 60;
+  if (m < 60) return `${m}m ${s}s left`;
+  const h = Math.floor(m / 60);
+  return `${h}h ${m % 60}m left`;
+}
 
 export function UploadManager() {
   const items = useUploadStore((s) => s.uploadQueue);
@@ -16,17 +41,33 @@ export function UploadManager() {
   const resumeUpload = useUploadStore((s) => s.resumeUpload);
   const cancelUpload = useUploadStore((s) => s.cancelUpload);
   const retryUpload = useUploadStore((s) => s.retryUpload);
+  const retryAllFailed = useUploadStore((s) => s.retryAllFailed);
+  const cancelAllUploading = useUploadStore((s) => s.cancelAllUploading);
+  const cancelAllQueued = useUploadStore((s) => s.cancelAllQueued);
 
+  // Summary derived inline from the same `items` slice so it stays reactive without an extra subscription.
   const summary = useMemo(() => {
     const active = items.filter((i) => i.status === "preparing" || i.status === "uploading").length;
+    const queued = items.filter((i) => i.status === "queued").length;
     const done = items.filter((i) => i.status === "success").length;
     const failed = items.filter((i) => i.status === "error").length;
     const canceled = items.filter((i) => i.status === "canceled").length;
-    const progress = items.length ? Math.round(items.reduce((sum, item) => sum + item.progress, 0) / items.length) : 0;
-    return { active, done, failed, canceled, progress };
+    const progress = items.length ? Math.round(items.reduce((s, i) => s + i.progress, 0) / items.length) : 0;
+    const speedBps = items
+      .filter((i) => i.status === "uploading")
+      .reduce((s, i) => s + (i.speedBps ?? 0), 0);
+    const remainingBytes = items
+      .filter((i) => i.status === "uploading")
+      .reduce((s, i) => s + Math.max(0, i.fileSize - (i.bytesUploaded ?? 0)), 0);
+    const etaSeconds = speedBps > 0 ? Math.round(remainingBytes / speedBps) : undefined;
+    return { active, queued, done, failed, canceled, progress, speedBps, etaSeconds, total: items.length };
   }, [items]);
 
   if (items.length === 0) return null;
+
+  const showSummaryLine = `Uploading ${summary.active} of ${summary.total} files`;
+  const speedLabel = formatBytesPerSecond(summary.speedBps);
+  const etaLabel = formatEta(summary.etaSeconds);
 
   return (
     <aside className="fixed bottom-4 right-4 z-50 w-[calc(100vw-2rem)] max-w-md" aria-label="Upload manager" aria-live="polite">
@@ -42,10 +83,12 @@ export function UploadManager() {
                 <Badge variant="secondary" className="text-[10px]">{items.length}</Badge>
               </div>
               <p className="truncate text-[11px] text-muted-foreground">
-                {summary.active > 0 ? `${summary.active} active` : "No active uploads"}
-                {summary.done > 0 ? ` · ${summary.done} done` : ""}
+                {summary.active > 0 ? showSummaryLine : "No active uploads"}
+                {summary.done > 0 ? ` · ${summary.done} completed` : ""}
                 {summary.failed > 0 ? ` · ${summary.failed} failed` : ""}
                 {summary.canceled > 0 ? ` · ${summary.canceled} canceled` : ""}
+                {summary.active > 0 && speedLabel ? ` · ${speedLabel}` : ""}
+                {summary.active > 0 && etaLabel ? ` · ${etaLabel}` : ""}
               </p>
             </div>
           </button>
@@ -62,18 +105,48 @@ export function UploadManager() {
         {!open && <Progress value={summary.progress} className="h-1 rounded-none" />}
 
         {open && (
-          <div className="max-h-[420px] overflow-y-auto p-2">
-            {items.map((item) => (
-              <UploadProgress
-                key={item.id}
-                item={item}
-                onPause={() => pauseUpload(item.id)}
-                onResume={() => resumeUpload(item.id)}
-                onCancel={() => cancelUpload(item.id)}
-                onRetry={() => retryUpload(item.id)}
-              />
-            ))}
-          </div>
+          <>
+            {(summary.failed > 0 || summary.active > 0 || summary.queued > 0 || summary.done > 0) && (
+              <div className="flex flex-wrap items-center gap-1.5 border-b border-border px-3 py-2 bg-muted/20">
+                {summary.failed > 0 && (
+                  <NexusButton size="sm" variant="outline" className="h-7 text-[11px]" onClick={retryAllFailed}>
+                    <RotateCcw className="h-3 w-3 mr-1" />
+                    Retry all failed ({summary.failed})
+                  </NexusButton>
+                )}
+                {summary.active > 0 && (
+                  <NexusButton size="sm" variant="ghost" className="h-7 text-[11px]" onClick={cancelAllUploading}>
+                    <Ban className="h-3 w-3 mr-1" />
+                    Cancel active
+                  </NexusButton>
+                )}
+                {summary.queued > 0 && (
+                  <NexusButton size="sm" variant="ghost" className="h-7 text-[11px]" onClick={cancelAllQueued}>
+                    <Ban className="h-3 w-3 mr-1" />
+                    Cancel queued
+                  </NexusButton>
+                )}
+                {summary.done > 0 && (
+                  <NexusButton size="sm" variant="ghost" className="h-7 text-[11px] ml-auto" onClick={clearCompleted}>
+                    <Trash2 className="h-3 w-3 mr-1" />
+                    Clear
+                  </NexusButton>
+                )}
+              </div>
+            )}
+            <div className="max-h-[420px] overflow-y-auto p-2 space-y-1">
+              {items.map((item) => (
+                <UploadProgress
+                  key={item.id}
+                  item={item}
+                  onPause={() => pauseUpload(item.id)}
+                  onResume={() => resumeUpload(item.id)}
+                  onCancel={() => cancelUpload(item.id)}
+                  onRetry={() => retryUpload(item.id)}
+                />
+              ))}
+            </div>
+          </>
         )}
       </NexusCard>
     </aside>

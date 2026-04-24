@@ -1,6 +1,9 @@
 import * as tus from "tus-js-client";
+import type { UploadErrorCode } from "./upload-errors";
 
 export type UploadStatus = "queued" | "preparing" | "uploading" | "paused" | "success" | "error" | "canceled";
+
+export type DuplicateResolution = "replace" | "keep-both" | "skip";
 
 export interface UploadItem {
   id: string;
@@ -11,6 +14,9 @@ export interface UploadItem {
   status: UploadStatus;
   error?: string;
   errorMessage?: string;
+  errorCode?: UploadErrorCode;
+  retryCount?: number;
+  autoRetried?: boolean;
   upload?: tus.Upload;
   abortController?: AbortController;
   url?: string;
@@ -21,6 +27,12 @@ export interface UploadItem {
   relativePath?: string;
   createdAt?: number;
   completedAt?: number;
+  startedAt?: number;
+  bytesUploaded?: number;
+  speedBps?: number;
+  etaSeconds?: number;
+  duplicateOf?: string;
+  duplicateResolution?: DuplicateResolution;
 }
 
 export interface TusUploaderOptions {

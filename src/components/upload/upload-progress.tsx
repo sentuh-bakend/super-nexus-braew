@@ -20,6 +20,23 @@ function formatFileSize(bytes: number): string {
   return `${(bytes / 1024 / 1024).toFixed(1)} MB`;
 }
 
+function formatSpeed(bps?: number): string {
+  if (!bps || bps <= 0) return "";
+  if (bps < 1024) return `${Math.round(bps)} B/s`;
+  if (bps < 1024 * 1024) return `${(bps / 1024).toFixed(1)} KB/s`;
+  return `${(bps / 1024 / 1024).toFixed(1)} MB/s`;
+}
+
+function formatEta(seconds?: number): string {
+  if (seconds == null || !isFinite(seconds)) return "";
+  if (seconds < 60) return `${seconds}s left`;
+  const m = Math.floor(seconds / 60);
+  const s = seconds % 60;
+  if (m < 60) return `${m}m ${s}s left`;
+  const h = Math.floor(m / 60);
+  return `${h}h ${m % 60}m left`;
+}
+
 const statusConfig = {
   queued: { icon: Clock, label: "Queued", color: "text-muted-foreground" },
   preparing: { icon: Loader2, label: "Preparing", color: "text-primary" },
@@ -67,8 +84,17 @@ export function UploadProgress({ item, onPause, onResume, onCancel, onRetry }: U
           </div>
         )}
 
+        {item.status === "uploading" && (item.speedBps || item.etaSeconds != null) && (
+          <p className="text-[10px] text-muted-foreground truncate">
+            {[formatSpeed(item.speedBps), formatEta(item.etaSeconds)].filter(Boolean).join(" · ")}
+          </p>
+        )}
+
         {item.status === "error" && (item.errorMessage || item.error) && (
-          <p className="text-[11px] text-destructive truncate">{item.errorMessage || item.error}</p>
+          <p className="text-[11px] text-destructive truncate">
+            {item.errorMessage || item.error}
+            {item.retryCount && item.retryCount > 0 ? ` · attempt ${item.retryCount + 1}` : ""}
+          </p>
         )}
       </div>
 

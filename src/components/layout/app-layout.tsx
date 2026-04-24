@@ -5,9 +5,12 @@ import { AppBreadcrumb } from "./app-breadcrumb";
 import { AppCommandPalette } from "@/components/navigation/app-command-palette";
 import { useRealtimeInit } from "@/hooks/use-realtime";
 import { UploadManager } from "@/components/upload/upload-manager";
+import { UploadDuplicateDialog } from "@/components/upload/upload-duplicate-dialog";
+import { useUploadSideEffects } from "@/lib/upload/use-upload-side-effects";
 
 export function AppLayout() {
   useRealtimeInit();
+  useUploadSideEffects();
 
   return (
     <div className="flex min-h-screen w-full bg-background">
@@ -21,6 +24,7 @@ export function AppLayout() {
       </div>
       <AppCommandPalette />
       <UploadManager />
+      <UploadDuplicateDialog />
     </div>
   );
 }
