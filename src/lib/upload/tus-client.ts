@@ -1,15 +1,21 @@
 import * as tus from "tus-js-client";
 
-export type UploadStatus = "queued" | "preparing" | "uploading" | "paused" | "complete" | "error" | "canceled";
+export type UploadStatus = "queued" | "preparing" | "uploading" | "paused" | "success" | "error" | "canceled";
 
 export interface UploadItem {
   id: string;
   file: File;
+  fileName: string;
+  fileSize: number;
   progress: number;
   status: UploadStatus;
   error?: string;
+  errorMessage?: string;
   upload?: tus.Upload;
+  abortController?: AbortController;
   url?: string;
+  uploadedFileId?: string;
+  responseData?: unknown;
   targetFolderId?: string;
   targetFolderName?: string;
   relativePath?: string;
