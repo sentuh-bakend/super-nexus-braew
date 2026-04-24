@@ -14,10 +14,11 @@ export function UploadQueue() {
   const cancelUpload = useUploadStore((s) => s.cancelUpload);
   const retryUpload = useUploadStore((s) => s.retryUpload);
 
-  const uploading = items.filter((i) => i.status === "uploading").length;
+  const uploading = items.filter((i) => i.status === "preparing" || i.status === "uploading").length;
   const queued = items.filter((i) => i.status === "queued").length;
   const completed = items.filter((i) => i.status === "complete").length;
   const errors = items.filter((i) => i.status === "error").length;
+  const canceled = items.filter((i) => i.status === "canceled").length;
 
   if (items.length === 0) return null;
 
@@ -43,6 +44,9 @@ export function UploadQueue() {
           )}
           {errors > 0 && (
             <Badge variant="destructive">{errors} failed</Badge>
+          )}
+          {canceled > 0 && (
+            <Badge variant="outline">{canceled} canceled</Badge>
           )}
         </div>
       </div>
