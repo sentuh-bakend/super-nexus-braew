@@ -1,7 +1,6 @@
 import { cn } from "@/lib/utils";
 import { Progress } from "@/components/ui/progress";
 import { NexusButton } from "@/components/ui/nexus-button";
-import { Badge } from "@/components/ui/badge";
 import type { UploadItem } from "@/lib/upload/tus-client";
 import {
   Pause, Play, X, RotateCcw, CheckCircle2, AlertCircle, Clock, Loader2, Ban,
@@ -26,7 +25,7 @@ const statusConfig = {
   preparing: { icon: Loader2, label: "Preparing", color: "text-primary" },
   uploading: { icon: Loader2, label: "Uploading", color: "text-primary" },
   paused: { icon: Pause, label: "Paused", color: "text-warning" },
-  complete: { icon: CheckCircle2, label: "Complete", color: "text-success" },
+  success: { icon: CheckCircle2, label: "Success", color: "text-success" },
   error: { icon: AlertCircle, label: "Error", color: "text-destructive" },
   canceled: { icon: Ban, label: "Canceled", color: "text-muted-foreground" },
 };
@@ -49,9 +48,9 @@ export function UploadProgress({ item, onPause, onResume, onCancel, onRetry }: U
       {/* Info */}
       <div className="flex-1 min-w-0 space-y-1">
         <div className="flex items-center justify-between gap-2">
-          <p className="text-sm font-medium text-foreground truncate">{item.relativePath || item.file.name}</p>
+          <p className="text-sm font-medium text-foreground truncate">{item.relativePath || item.fileName}</p>
           <span className="text-[11px] text-muted-foreground shrink-0">
-            {formatFileSize(item.file.size)}
+            {formatFileSize(item.fileSize)}
           </span>
         </div>
 
@@ -68,30 +67,30 @@ export function UploadProgress({ item, onPause, onResume, onCancel, onRetry }: U
           </div>
         )}
 
-        {item.status === "error" && item.error && (
-          <p className="text-[11px] text-destructive truncate">{item.error}</p>
+        {item.status === "error" && (item.errorMessage || item.error) && (
+          <p className="text-[11px] text-destructive truncate">{item.errorMessage || item.error}</p>
         )}
       </div>
 
       {/* Actions */}
       <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
         {item.status === "uploading" && onPause && (
-          <NexusButton variant="ghost" size="icon" className="h-7 w-7" onClick={onPause} aria-label={`Pause ${item.file.name}`}>
+          <NexusButton variant="ghost" size="icon" className="h-7 w-7" onClick={onPause} aria-label={`Pause ${item.fileName}`}>
             <Pause className="h-3.5 w-3.5" />
           </NexusButton>
         )}
         {item.status === "paused" && onResume && (
-          <NexusButton variant="ghost" size="icon" className="h-7 w-7" onClick={onResume} aria-label={`Resume ${item.file.name}`}>
+          <NexusButton variant="ghost" size="icon" className="h-7 w-7" onClick={onResume} aria-label={`Resume ${item.fileName}`}>
             <Play className="h-3.5 w-3.5" />
           </NexusButton>
         )}
         {item.status === "error" && onRetry && (
-          <NexusButton variant="ghost" size="icon" className="h-7 w-7" onClick={onRetry} aria-label={`Retry ${item.file.name}`}>
+          <NexusButton variant="ghost" size="icon" className="h-7 w-7" onClick={onRetry} aria-label={`Retry ${item.fileName}`}>
             <RotateCcw className="h-3.5 w-3.5" />
           </NexusButton>
         )}
-        {item.status !== "complete" && item.status !== "canceled" && onCancel && (
-          <NexusButton variant="ghost" size="icon" className="h-7 w-7" onClick={onCancel} aria-label={`Cancel ${item.file.name}`}>
+        {item.status !== "success" && item.status !== "canceled" && onCancel && (
+          <NexusButton variant="ghost" size="icon" className="h-7 w-7" onClick={onCancel} aria-label={`Cancel ${item.fileName}`}>
             <X className="h-3.5 w-3.5 text-destructive" />
           </NexusButton>
         )}

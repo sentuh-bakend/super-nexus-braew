@@ -6,8 +6,8 @@ import { useUploadStore } from "@/lib/upload/upload-store";
 import { NexusCard } from "@/components/ui/nexus-card";
 
 export default function UploadsPage() {
-  const items = useUploadStore((s) => s.items);
-  const completed = items.filter((i) => i.status === "complete");
+  const items = useUploadStore((s) => s.uploadQueue);
+  const completed = items.filter((i) => i.status === "success");
 
   return (
     <div className="space-y-6">
