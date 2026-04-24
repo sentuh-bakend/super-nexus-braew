@@ -4,7 +4,7 @@ import { NexusButton } from "@/components/ui/nexus-button";
 import { Badge } from "@/components/ui/badge";
 import type { UploadItem } from "@/lib/upload/tus-client";
 import {
-  Pause, Play, X, RotateCcw, CheckCircle2, AlertCircle, Clock, Loader2,
+  Pause, Play, X, RotateCcw, CheckCircle2, AlertCircle, Clock, Loader2, Ban,
 } from "lucide-react";
 
 interface UploadProgressProps {
@@ -23,10 +23,12 @@ function formatFileSize(bytes: number): string {
 
 const statusConfig = {
   queued: { icon: Clock, label: "Queued", color: "text-muted-foreground" },
+  preparing: { icon: Loader2, label: "Preparing", color: "text-primary" },
   uploading: { icon: Loader2, label: "Uploading", color: "text-primary" },
   paused: { icon: Pause, label: "Paused", color: "text-warning" },
   complete: { icon: CheckCircle2, label: "Complete", color: "text-success" },
   error: { icon: AlertCircle, label: "Error", color: "text-destructive" },
+  canceled: { icon: Ban, label: "Canceled", color: "text-muted-foreground" },
 };
 
 export function UploadProgress({ item, onPause, onResume, onCancel, onRetry }: UploadProgressProps) {
@@ -47,13 +49,17 @@ export function UploadProgress({ item, onPause, onResume, onCancel, onRetry }: U
       {/* Info */}
       <div className="flex-1 min-w-0 space-y-1">
         <div className="flex items-center justify-between gap-2">
-          <p className="text-sm font-medium text-foreground truncate">{item.file.name}</p>
+          <p className="text-sm font-medium text-foreground truncate">{item.relativePath || item.file.name}</p>
           <span className="text-[11px] text-muted-foreground shrink-0">
             {formatFileSize(item.file.size)}
           </span>
         </div>
 
-        {(item.status === "uploading" || item.status === "paused") && (
+        {item.targetFolderName && (
+          <p className="text-[11px] text-muted-foreground truncate">Target: {item.targetFolderName}</p>
+        )}
+
+        {(item.status === "preparing" || item.status === "uploading" || item.status === "paused") && (
           <div className="flex items-center gap-2">
             <Progress value={item.progress} className="h-1.5 flex-1" />
             <span className="text-[11px] font-medium text-muted-foreground w-8 text-right">
@@ -70,22 +76,22 @@ export function UploadProgress({ item, onPause, onResume, onCancel, onRetry }: U
       {/* Actions */}
       <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
         {item.status === "uploading" && onPause && (
-          <NexusButton variant="ghost" size="icon" className="h-7 w-7" onClick={onPause}>
+          <NexusButton variant="ghost" size="icon" className="h-7 w-7" onClick={onPause} aria-label={`Pause ${item.file.name}`}>
             <Pause className="h-3.5 w-3.5" />
           </NexusButton>
         )}
         {item.status === "paused" && onResume && (
-          <NexusButton variant="ghost" size="icon" className="h-7 w-7" onClick={onResume}>
+          <NexusButton variant="ghost" size="icon" className="h-7 w-7" onClick={onResume} aria-label={`Resume ${item.file.name}`}>
             <Play className="h-3.5 w-3.5" />
           </NexusButton>
         )}
         {item.status === "error" && onRetry && (
-          <NexusButton variant="ghost" size="icon" className="h-7 w-7" onClick={onRetry}>
+          <NexusButton variant="ghost" size="icon" className="h-7 w-7" onClick={onRetry} aria-label={`Retry ${item.file.name}`}>
             <RotateCcw className="h-3.5 w-3.5" />
           </NexusButton>
         )}
-        {item.status !== "complete" && onCancel && (
-          <NexusButton variant="ghost" size="icon" className="h-7 w-7" onClick={onCancel}>
+        {item.status !== "complete" && item.status !== "canceled" && onCancel && (
+          <NexusButton variant="ghost" size="icon" className="h-7 w-7" onClick={onCancel} aria-label={`Cancel ${item.file.name}`}>
             <X className="h-3.5 w-3.5 text-destructive" />
           </NexusButton>
         )}
