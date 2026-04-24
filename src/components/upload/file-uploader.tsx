@@ -10,6 +10,8 @@ interface FileUploaderProps {
   directory?: boolean;
   targetFolderId?: string;
   targetFolderName?: string;
+  title?: string;
+  description?: string;
   className?: string;
 }
 
@@ -20,6 +22,8 @@ export function FileUploader({
   directory = false,
   targetFolderId,
   targetFolderName,
+  title,
+  description,
   className,
 }: FileUploaderProps) {
   const addFiles = useUploadStore((s) => s.addFiles);
@@ -84,10 +88,10 @@ export function FileUploader({
       </div>
       <div className="text-center">
         <p className="text-sm font-medium text-foreground">
-          {dragActive ? "Drop files here" : "Drag & drop files here"}
+          {dragActive ? "Drop here" : title ?? (directory ? "Upload folder" : "Drag & drop files here")}
         </p>
         <p className="text-xs text-muted-foreground mt-1">
-          or click to browse · Max {Math.round(maxSize / 1024 / 1024)}MB per file
+          {description ?? `or click to browse · Max ${Math.round(maxSize / 1024 / 1024)}MB per file`}
         </p>
       </div>
       <input
