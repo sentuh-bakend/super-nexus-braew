@@ -52,7 +52,10 @@ export const useUploadStore = create<UploadState>()((set, get) => {
         window.dispatchEvent(new CustomEvent("nexus:upload-complete", { detail: { item: { ...item, url } } }));
       }
     },
-    onError: (id, error) => get()._updateItem(id, { status: "error", error: error.message }),
+    onError: (id, error) => {
+      get()._updateItem(id, { status: "error", error: error.message });
+      get().startAll();
+    },
   });
 
   return {
@@ -99,7 +102,7 @@ export const useUploadStore = create<UploadState>()((set, get) => {
     startAll: () => {
       const { items, maxConcurrent, startUpload } = get();
       const queued = items.filter((i) => i.status === "queued");
-      const active = items.filter((i) => i.status === "uploading").length;
+      const active = items.filter((i) => i.status === "preparing" || i.status === "uploading").length;
       const toStart = queued.slice(0, maxConcurrent - active);
       toStart.forEach((i) => startUpload(i.id));
     },
