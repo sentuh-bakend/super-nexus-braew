@@ -1,6 +1,6 @@
 import * as tus from "tus-js-client";
 
-export type UploadStatus = "queued" | "uploading" | "paused" | "complete" | "error";
+export type UploadStatus = "queued" | "preparing" | "uploading" | "paused" | "complete" | "error" | "canceled";
 
 export interface UploadItem {
   id: string;
@@ -10,6 +10,11 @@ export interface UploadItem {
   error?: string;
   upload?: tus.Upload;
   url?: string;
+  targetFolderId?: string;
+  targetFolderName?: string;
+  relativePath?: string;
+  createdAt?: number;
+  completedAt?: number;
 }
 
 export interface TusUploaderOptions {
