@@ -10,6 +10,7 @@ interface AddFilesOptions {
 
 interface UploadState {
   items: UploadItem[];
+  uploadQueue: UploadItem[];
   endpoint: string;
   maxConcurrent: number;
   managerOpen: boolean;
@@ -46,20 +47,21 @@ export const useUploadStore = create<UploadState>()((set, get) => {
     onProgress: (id, progress) => get()._updateItem(id, { progress, status: "uploading" }),
     onSuccess: (id, url) => {
       const item = get().items.find((i) => i.id === id);
-      get()._updateItem(id, { progress: 100, status: "complete", url, completedAt: Date.now() });
+      get()._updateItem(id, { progress: 100, status: "success", url, uploadedFileId: url, responseData: { url }, completedAt: Date.now() });
       get().startAll();
       if (item) {
         window.dispatchEvent(new CustomEvent("nexus:upload-complete", { detail: { item: { ...item, url } } }));
       }
     },
     onError: (id, error) => {
-      get()._updateItem(id, { status: "error", error: error.message });
+      get()._updateItem(id, { status: "error", error: error.message, errorMessage: error.message });
       get().startAll();
     },
   });
 
   return {
     items: [],
+    uploadQueue: [],
     endpoint: "/api/v1/uploads",
     maxConcurrent: 3,
     managerOpen: getStoredManagerOpen(),
@@ -77,6 +79,8 @@ export const useUploadStore = create<UploadState>()((set, get) => {
       const newItems: UploadItem[] = files.map((file) => ({
         id: `upload-${++counter}-${Date.now()}`,
         file,
+        fileName: file.name,
+        fileSize: file.size,
         progress: 0,
         status: "queued" as UploadStatus,
         targetFolderId: options?.targetFolderId,
@@ -84,7 +88,7 @@ export const useUploadStore = create<UploadState>()((set, get) => {
         relativePath: getRelativePath(file),
         createdAt: Date.now(),
       }));
-      set((s) => ({ items: [...s.items, ...newItems] }));
+      set((s) => ({ items: [...s.items, ...newItems], uploadQueue: [...s.uploadQueue, ...newItems] }));
       get().setManagerOpen(true);
       toast.success(`${newItems.length} upload${newItems.length > 1 ? "s" : ""} added to queue`);
       get().startAll();
@@ -92,7 +96,7 @@ export const useUploadStore = create<UploadState>()((set, get) => {
 
     startUpload: (id) => {
       const item = get().items.find((i) => i.id === id);
-      if (!item || item.status === "uploading" || item.status === "complete") return;
+      if (!item || item.status === "uploading" || item.status === "success") return;
 
       const upload = createTusUpload(item, getOptions());
       get()._updateItem(id, { upload, status: "preparing", error: undefined });
@@ -149,12 +153,16 @@ export const useUploadStore = create<UploadState>()((set, get) => {
     },
 
     clearCompleted: () => {
-      set((s) => ({ items: s.items.filter((i) => i.status !== "complete") }));
+      set((s) => {
+        const uploadQueue = s.uploadQueue.filter((i) => i.status !== "success");
+        return { items: uploadQueue, uploadQueue };
+      });
     },
 
     _updateItem: (id, patch) => {
       set((s) => ({
         items: s.items.map((i) => (i.id === id ? { ...i, ...patch } : i)),
+        uploadQueue: s.uploadQueue.map((i) => (i.id === id ? { ...i, ...patch } : i)),
       }));
     },
   };
