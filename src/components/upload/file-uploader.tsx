@@ -7,6 +7,11 @@ interface FileUploaderProps {
   accept?: string;
   maxFiles?: number;
   maxSize?: number; // bytes
+  directory?: boolean;
+  targetFolderId?: string;
+  targetFolderName?: string;
+  title?: string;
+  description?: string;
   className?: string;
 }
 
@@ -14,10 +19,14 @@ export function FileUploader({
   accept,
   maxFiles = 20,
   maxSize = 100 * 1024 * 1024, // 100MB
+  directory = false,
+  targetFolderId,
+  targetFolderName,
+  title,
+  description,
   className,
 }: FileUploaderProps) {
   const addFiles = useUploadStore((s) => s.addFiles);
-  const startAll = useUploadStore((s) => s.startAll);
   const [dragActive, setDragActive] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -26,11 +35,10 @@ export function FileUploader({
       if (!fileList) return;
       const files = Array.from(fileList).slice(0, maxFiles).filter((f) => f.size <= maxSize);
       if (files.length > 0) {
-        addFiles(files);
-        startAll();
+        addFiles(files, { targetFolderId, targetFolderName });
       }
     },
-    [addFiles, startAll, maxFiles, maxSize]
+    [addFiles, maxFiles, maxSize, targetFolderId, targetFolderName]
   );
 
   const onDragOver = (e: React.DragEvent) => {
@@ -80,10 +88,10 @@ export function FileUploader({
       </div>
       <div className="text-center">
         <p className="text-sm font-medium text-foreground">
-          {dragActive ? "Drop files here" : "Drag & drop files here"}
+          {dragActive ? "Drop here" : title ?? (directory ? "Upload folder" : "Drag & drop files here")}
         </p>
         <p className="text-xs text-muted-foreground mt-1">
-          or click to browse · Max {Math.round(maxSize / 1024 / 1024)}MB per file
+          {description ?? `or click to browse · Max ${Math.round(maxSize / 1024 / 1024)}MB per file`}
         </p>
       </div>
       <input
@@ -91,6 +99,7 @@ export function FileUploader({
         type="file"
         multiple
         accept={accept}
+        {...(directory ? { webkitdirectory: "", directory: "" } : {})}
         onChange={(e) => handleFiles(e.target.files)}
         className="hidden"
       />

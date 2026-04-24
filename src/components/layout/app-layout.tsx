@@ -4,6 +4,7 @@ import { AppNavbar } from "./app-navbar";
 import { AppBreadcrumb } from "./app-breadcrumb";
 import { AppCommandPalette } from "@/components/navigation/app-command-palette";
 import { useRealtimeInit } from "@/hooks/use-realtime";
+import { UploadManager } from "@/components/upload/upload-manager";
 
 export function AppLayout() {
   useRealtimeInit();
@@ -19,6 +20,7 @@ export function AppLayout() {
         </main>
       </div>
       <AppCommandPalette />
+      <UploadManager />
     </div>
   );
 }
