@@ -16,7 +16,10 @@ export default function UploadsPage() {
         description="Resumable file uploads with TUS protocol — drag & drop, pause, resume, retry"
       />
 
-      <FileUploader />
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <FileUploader />
+        <FileUploader directory maxFiles={200} className="min-h-[188px]" />
+      </div>
 
       <UploadQueue />
 
