@@ -18,7 +18,13 @@ export default function UploadsPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <FileUploader />
-        <FileUploader directory maxFiles={200} className="min-h-[188px]" />
+        <FileUploader
+          directory
+          maxFiles={200}
+          title="Upload folder"
+          description="Select a folder · Files keep their relative paths"
+          className="min-h-[188px]"
+        />
       </div>
 
       <UploadQueue />
