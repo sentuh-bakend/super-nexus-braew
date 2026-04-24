@@ -42,7 +42,7 @@ export function UploadProgress({ item, onPause, onResume, onCancel, onRetry }: U
         className={cn(
           "h-4.5 w-4.5 shrink-0",
           config.color,
-          item.status === "uploading" && "animate-spin"
+          (item.status === "preparing" || item.status === "uploading") && "animate-spin"
         )}
       />
 
