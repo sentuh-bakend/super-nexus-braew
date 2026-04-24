@@ -8,7 +8,7 @@ import { useUploadStore } from "@/lib/upload/upload-store";
 import { UploadProgress } from "./upload-progress";
 
 export function UploadManager() {
-  const items = useUploadStore((s) => s.items);
+  const items = useUploadStore((s) => s.uploadQueue);
   const open = useUploadStore((s) => s.managerOpen);
   const setOpen = useUploadStore((s) => s.setManagerOpen);
   const clearCompleted = useUploadStore((s) => s.clearCompleted);
@@ -19,7 +19,7 @@ export function UploadManager() {
 
   const summary = useMemo(() => {
     const active = items.filter((i) => i.status === "preparing" || i.status === "uploading").length;
-    const done = items.filter((i) => i.status === "complete").length;
+    const done = items.filter((i) => i.status === "success").length;
     const failed = items.filter((i) => i.status === "error").length;
     const canceled = items.filter((i) => i.status === "canceled").length;
     const progress = items.length ? Math.round(items.reduce((sum, item) => sum + item.progress, 0) / items.length) : 0;

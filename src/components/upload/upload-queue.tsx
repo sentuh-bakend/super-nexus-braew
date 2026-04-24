@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Trash2, Play } from "lucide-react";
 
 export function UploadQueue() {
-  const items = useUploadStore((s) => s.items);
+  const items = useUploadStore((s) => s.uploadQueue);
   const startAll = useUploadStore((s) => s.startAll);
   const clearCompleted = useUploadStore((s) => s.clearCompleted);
   const pauseUpload = useUploadStore((s) => s.pauseUpload);
@@ -16,7 +16,7 @@ export function UploadQueue() {
 
   const uploading = items.filter((i) => i.status === "preparing" || i.status === "uploading").length;
   const queued = items.filter((i) => i.status === "queued").length;
-  const completed = items.filter((i) => i.status === "complete").length;
+  const completed = items.filter((i) => i.status === "success").length;
   const errors = items.filter((i) => i.status === "error").length;
   const canceled = items.filter((i) => i.status === "canceled").length;
 
