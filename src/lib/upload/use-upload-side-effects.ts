@@ -39,11 +39,19 @@ export function useUploadSideEffects() {
       const tag = el.tagName;
       if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return true;
       if (el.isContentEditable) return true;
+      // Walk up: catches contentEditable wrappers (rich text editors, code editors).
+      if (el.closest?.('[contenteditable="true"], input, textarea, select, [role="textbox"], [role="combobox"], [role="searchbox"]')) {
+        return true;
+      }
       return false;
     };
 
     const handler = (e: ClipboardEvent) => {
       if (isEditableTarget(e.target)) return;
+      // Don't hijack when an overlay that owns its own paste UX is open
+      // (command palette, modal dialog, etc.).
+      if (document.querySelector('[data-state="open"][role="dialog"], [cmdk-root]')) return;
+
       const cd = e.clipboardData;
       if (!cd) return;
 
@@ -82,8 +90,11 @@ export function useUploadSideEffects() {
       );
     };
 
-    window.addEventListener("paste", handler);
-    return () => window.removeEventListener("paste", handler);
+    // Listen on document so we receive paste events from any focus context
+    // (including document.body when nothing is focused) on both Win/Linux
+    // (Ctrl+V) and macOS (Cmd+V) — the browser fires `paste` for both.
+    document.addEventListener("paste", handler);
+    return () => document.removeEventListener("paste", handler);
   }, []);
 
   // Batch completion notifications: fire when the queue drains.
