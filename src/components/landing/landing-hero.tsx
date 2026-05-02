@@ -87,15 +87,15 @@ export function LandingHero() {
               <div className="col-span-9 space-y-3">
                 <div className="grid grid-cols-3 gap-3">
                   {[
-                    { label: "Active users", value: "2,847", tone: "primary" },
-                    { label: "API calls", value: "1.2M", tone: "secondary" },
-                    { label: "Uptime", value: "99.98%", tone: "success" },
+                    { label: "Active users", value: "2,847", track: "bg-primary/15", bar: "bg-primary" },
+                    { label: "API calls", value: "1.2M", track: "bg-secondary/15", bar: "bg-secondary" },
+                    { label: "Uptime", value: "99.98%", track: "bg-success/15", bar: "bg-success" },
                   ].map((s) => (
                     <div key={s.label} className="rounded-md border border-border bg-background p-3">
                       <div className="text-caption text-muted-foreground">{s.label}</div>
                       <div className="mt-1 text-h3 font-semibold text-foreground">{s.value}</div>
-                      <div className={`mt-2 h-1 w-full rounded-full bg-${s.tone}/15`}>
-                        <div className={`h-1 w-2/3 rounded-full bg-${s.tone}`} />
+                      <div className={`mt-2 h-1 w-full rounded-full ${s.track}`}>
+                        <div className={`h-1 w-2/3 rounded-full ${s.bar}`} />
                       </div>
                     </div>
                   ))}
