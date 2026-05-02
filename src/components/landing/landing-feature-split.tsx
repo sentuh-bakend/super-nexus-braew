@@ -174,7 +174,7 @@ function VisualMock({ kind, tone }: { kind: string; tone: string }) {
 
 export function LandingFeatureSplit() {
   return (
-    <section className="border-b border-border bg-background py-20 md:py-24">
+    <section id="modules" className="border-b border-border bg-background py-20 md:py-24">
       <div className="mx-auto max-w-7xl px-layout">
         <div className="mx-auto mb-16 max-w-2xl text-center">
           <span className="text-caption font-semibold uppercase tracking-wider text-primary">
