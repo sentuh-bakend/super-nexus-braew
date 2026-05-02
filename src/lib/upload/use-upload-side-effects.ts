@@ -28,6 +28,64 @@ export function useUploadSideEffects() {
     return () => window.removeEventListener("beforeunload", handler);
   }, []);
 
+  // Global paste-to-upload (Ctrl/Cmd + V).
+  // Captures files (and image blobs from screenshot tools) from the clipboard
+  // and feeds them into the existing upload queue. Skips when the user is
+  // typing in an editable field so it doesn't hijack normal text paste.
+  useEffect(() => {
+    const isEditableTarget = (target: EventTarget | null) => {
+      const el = target as HTMLElement | null;
+      if (!el) return false;
+      const tag = el.tagName;
+      if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return true;
+      if (el.isContentEditable) return true;
+      return false;
+    };
+
+    const handler = (e: ClipboardEvent) => {
+      if (isEditableTarget(e.target)) return;
+      const cd = e.clipboardData;
+      if (!cd) return;
+
+      const files: File[] = [];
+
+      // Direct files (e.g. copied from file explorer).
+      if (cd.files && cd.files.length > 0) {
+        for (let i = 0; i < cd.files.length; i++) files.push(cd.files[i]);
+      }
+
+      // Image blobs from clipboard items (screenshots, "Copy image").
+      if (files.length === 0 && cd.items) {
+        for (let i = 0; i < cd.items.length; i++) {
+          const item = cd.items[i];
+          if (item.kind === "file") {
+            const f = item.getAsFile();
+            if (f) {
+              const ext = f.type.split("/")[1] || "png";
+              const named =
+                f.name && f.name !== "image.png"
+                  ? f
+                  : new File([f], `pasted-${Date.now()}.${ext}`, { type: f.type });
+              files.push(named);
+            }
+          }
+        }
+      }
+
+      if (files.length === 0) return;
+      e.preventDefault();
+      useUploadStore.getState().addFiles(files);
+      toast.success(
+        files.length === 1
+          ? `Pasted "${files[0].name}" to uploads`
+          : `Pasted ${files.length} files to uploads`,
+      );
+    };
+
+    window.addEventListener("paste", handler);
+    return () => window.removeEventListener("paste", handler);
+  }, []);
+
   // Batch completion notifications: fire when the queue drains.
   useEffect(() => {
     const active = items.filter((i) => i.status === "uploading" || i.status === "preparing" || i.status === "queued").length;
