@@ -3,43 +3,43 @@ import { Quote } from "lucide-react";
 const testimonials = [
   {
     quote:
-      "NexusOS replaced three separate tools in our stack. The team was up and running in a single afternoon.",
-    name: "Sarah Chen",
-    role: "VP Engineering",
-    company: "Stripe",
-    initials: "SC",
+      "Dengan NexusOS, kami memangkas waktu setup admin platform secara drastis. Semua terasa lebih konsisten dari sisi access, UI, dan operasional.",
+    name: "Rina Hartono",
+    role: "Head of Product",
+    company: "Sentuh Digital",
+    initials: "RH",
   },
   {
     quote:
-      "The design system is gorgeous and the developer experience is the best I've used in years. Truly delightful.",
-    name: "Marcus Rivera",
-    role: "Staff Engineer",
-    company: "Vercel",
-    initials: "MR",
+      "Yang paling terasa adalah clarity. Design system, admin flow, dan struktur operasionalnya sangat membantu tim berkembang tanpa chaos.",
+    name: "Daniel Kurniawan",
+    role: "Engineering Manager",
+    company: "Atlas Group",
+    initials: "DK",
   },
   {
     quote:
-      "Audit logs, RBAC, real-time — all just worked. We shipped to production in our first week.",
-    name: "Aisha Patel",
+      "Bukan cuma dashboard yang rapi. Governance, auditability, dan readiness untuk scale benar-benar terasa sejak awal.",
+    name: "Maya Pranoto",
     role: "CTO",
-    company: "Linear",
-    initials: "AP",
+    company: "Orion Ops",
+    initials: "MP",
   },
 ];
 
 export function LandingTestimonials() {
   return (
-    <section id="testimonials" className="border-b border-border py-20 md:py-28">
-      <div className="mx-auto max-w-7xl px-6">
+    <section id="testimonials" className="border-b border-border bg-surface py-20 md:py-24">
+      <div className="mx-auto max-w-7xl px-layout">
         <div className="mx-auto mb-14 max-w-2xl text-center">
-          <span className="text-sm font-semibold uppercase tracking-wider text-primary">
+          <span className="text-caption font-semibold uppercase tracking-wider text-primary">
             Testimonials
           </span>
           <h2 className="mt-3 text-3xl font-bold tracking-tight text-foreground md:text-4xl">
-            Loved by engineering teams
+            Loved by teams building serious products
           </h2>
-          <p className="mt-4 text-muted-foreground">
-            Don't just take our word for it — hear from the teams shipping with NexusOS.
+          <p className="mt-4 text-body-lg text-muted-foreground">
+            Bukti dari tim yang sudah membangun di atas NexusOS.
           </p>
         </div>
 
