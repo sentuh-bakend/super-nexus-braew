@@ -5,8 +5,8 @@ import { useUIStore } from "@/stores";
 import { cn } from "@/lib/utils";
 
 const navItems = [
-  { label: "Products", href: "#products" },
   { label: "Features", href: "#features" },
+  { label: "Modules", href: "#modules" },
   { label: "Testimonials", href: "#testimonials" },
   { label: "Pricing", href: "#pricing" },
 ];

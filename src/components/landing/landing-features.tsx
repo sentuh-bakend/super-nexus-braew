@@ -1,66 +1,82 @@
-import { Zap, Lock, Globe, Code2, GitBranch, Gauge } from "lucide-react";
+import { LayoutGrid, ShieldCheck, Activity, Plug, Palette, Lock } from "lucide-react";
 
 const features = [
   {
-    icon: Zap,
-    title: "Lightning fast",
-    description: "Optimized bundle, smart caching, and instant navigation.",
+    icon: LayoutGrid,
+    title: "Unified Workspace",
+    description: "Kelola operasi, user, project, dan konfigurasi dari satu platform.",
+    tone: "primary",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Access Control",
+    description: "Role, permission, dan organizational scope siap untuk skenario enterprise.",
+    tone: "accent",
+  },
+  {
+    icon: Activity,
+    title: "Operational Visibility",
+    description: "Pantau activity, audit trail, insights, dan usage secara real-time.",
+    tone: "secondary",
+  },
+  {
+    icon: Plug,
+    title: "API-Ready Foundation",
+    description: "Struktur siap integrasi backend, webhook, upload, dan event-driven workflow.",
+    tone: "info",
+  },
+  {
+    icon: Palette,
+    title: "Scalable UI System",
+    description: "Design system konsisten untuk admin, dashboard, dan marketing surfaces.",
+    tone: "warning",
   },
   {
     icon: Lock,
-    title: "Secure by default",
-    description: "Row-level security, RBAC, and audit logs out of the box.",
-  },
-  {
-    icon: Globe,
-    title: "Multi-tenant ready",
-    description: "Organizations, workspaces, and projects with isolation.",
-  },
-  {
-    icon: Code2,
-    title: "Developer first",
-    description: "Type-safe APIs, Zod validation, and clean architecture.",
-  },
-  {
-    icon: GitBranch,
-    title: "Real-time sync",
-    description: "WebSockets and SSE for live presence and notifications.",
-  },
-  {
-    icon: Gauge,
-    title: "Observability",
-    description: "Built-in metrics, health checks, and system insights.",
+    title: "Secure by Design",
+    description: "Session handling, auth flow, API key pattern, dan governance-friendly architecture.",
+    tone: "success",
   },
 ];
 
+const toneMap: Record<string, string> = {
+  primary: "bg-primary/10 text-primary",
+  accent: "bg-accent/10 text-accent",
+  secondary: "bg-secondary/10 text-secondary",
+  info: "bg-info/10 text-info",
+  warning: "bg-warning/10 text-warning",
+  success: "bg-success/10 text-success",
+};
+
 export function LandingFeatures() {
   return (
-    <section id="features" className="border-b border-border bg-surface/50 py-20 md:py-28">
-      <div className="mx-auto max-w-7xl px-6">
+    <section id="features" className="border-b border-border bg-surface py-20 md:py-24">
+      <div className="mx-auto max-w-7xl px-layout">
         <div className="mx-auto mb-14 max-w-2xl text-center">
-          <span className="text-sm font-semibold uppercase tracking-wider text-primary">
-            Features
+          <span className="text-caption font-semibold uppercase tracking-wider text-primary">
+            Capabilities
           </span>
           <h2 className="mt-3 text-3xl font-bold tracking-tight text-foreground md:text-4xl">
-            Built for teams that ship
+            Built for teams that need clarity, control, and scale
           </h2>
-          <p className="mt-4 text-muted-foreground">
-            Production-grade primitives so you can focus on your product.
+          <p className="mt-4 text-body-lg text-muted-foreground">
+            Capability dasar yang mendukung tim engineering, ops, dan product.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-gap sm:grid-cols-2 lg:grid-cols-3">
           {features.map((feature) => {
             const Icon = feature.icon;
             return (
-              <div key={feature.title} className="flex gap-4">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+              <div
+                key={feature.title}
+                className="group rounded-xl border border-border bg-card p-card-pad transition-all hover:border-primary/30 hover:bg-surface-hover hover:shadow-md"
+              >
+                <div className={`mb-4 inline-flex h-11 w-11 items-center justify-center rounded-lg ${toneMap[feature.tone]}`}>
                   <Icon className="h-5 w-5" />
                 </div>
-                <div>
-                  <h3 className="mb-1.5 font-semibold text-foreground">{feature.title}</h3>
-                  <p className="text-sm text-muted-foreground">{feature.description}</p>
-                </div>
+                <h3 className="mb-2 text-h4 font-semibold text-foreground">{feature.title}</h3>
+                <p className="text-body text-muted-foreground">{feature.description}</p>
               </div>
             );
           })}
